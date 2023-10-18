@@ -1,17 +1,19 @@
-extends CharacterBody2D
+extends entity
 
-@export var speed = 200
 @export var enemies : Array[CharacterBody2D] = []
 
 const detectionRadius = 200;
 
+func _ready():
+	moveSpeed = 200
+
 func get_input():
 	var input_direction = Input.get_vector("Left", "Right", "Up", "Down")
-	velocity = input_direction * speed
+	velocity = input_direction * moveSpeed
 
 func _physics_process(_delta):
 	get_input()
-	move_and_slide()
+	super(_delta)
 
 func _draw():
 	var closest = null

@@ -1,47 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhuwnlds1rnqf"]
+[gd_scene load_steps=3 format=3 uid="uid://bhuwnlds1rnqf"]
 
-[ext_resource type="Script" path="res://Assets/Temp/Scripts/TestPlayer.gd" id="1_q04f1"]
-[ext_resource type="Texture2D" uid="uid://cmikoty8jdoc5" path="res://Assets/icon.svg" id="2_leapt"]
-[ext_resource type="Shape2D" uid="uid://b2eeq5r17osgx" path="res://Assets/Temp/rectTempChar.tres" id="3_p27p4"]
-[ext_resource type="Script" path="res://Assets/Temp/Scripts/TestEnemy.gd" id="4_2164a"]
+[ext_resource type="PackedScene" uid="uid://cacx1c63fujbd" path="res://Assets/Temp/Scenes/Entities/Character.tscn" id="1_fj2ma"]
+[ext_resource type="PackedScene" uid="uid://dhgo1wix4isuo" path="res://Assets/Temp/Scenes/Entities/Enemy.tscn" id="2_kodl0"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Character" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemies")]
-position = Vector2(500, 250)
-script = ExtResource("1_q04f1")
-enemies = [NodePath("../Enemy 1"), NodePath("../Enemy 2")]
+[node name="Character" parent="." node_paths=PackedStringArray("enemies") instance=ExtResource("1_fj2ma")]
+enemies = [NodePath("../Enemy"), NodePath("../Enemy2")]
 
-[node name="Sprite2D" type="Sprite2D" parent="Character"]
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_leapt")
+[node name="Camera2D2" type="Camera2D" parent="Character"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
-scale = Vector2(0.3, 0.3)
-shape = ExtResource("3_p27p4")
+[node name="Enemy" parent="." instance=ExtResource("2_kodl0")]
+position = Vector2(851, 274)
 
-[node name="Camera2D" type="Camera2D" parent="Character"]
-
-[node name="Enemy 1" type="CharacterBody2D" parent="."]
-position = Vector2(100, 250)
-script = ExtResource("4_2164a")
-
-[node name="Sprite2D" type="Sprite2D" parent="Enemy 1"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_leapt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy 1"]
-scale = Vector2(0.5, 0.5)
-shape = ExtResource("3_p27p4")
-
-[node name="Enemy 2" type="CharacterBody2D" parent="."]
-position = Vector2(600, 500)
-script = ExtResource("4_2164a")
-
-[node name="Sprite2D" type="Sprite2D" parent="Enemy 2"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_leapt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy 2"]
-scale = Vector2(0.5, 0.5)
-shape = ExtResource("3_p27p4")
+[node name="Enemy2" parent="." instance=ExtResource("2_kodl0")]
+position = Vector2(223, 145)
