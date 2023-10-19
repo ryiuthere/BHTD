@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhuwnlds1rnqf"]
+
+[ext_resource type="PackedScene" uid="uid://cacx1c63fujbd" path="res://Assets/Temp/Scenes/Entities/Character.tscn" id="1_fj2ma"]
+[ext_resource type="PackedScene" uid="uid://dhgo1wix4isuo" path="res://Assets/Temp/Scenes/Entities/Enemy.tscn" id="2_kodl0"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Character" parent="." node_paths=PackedStringArray("enemies") instance=ExtResource("1_fj2ma")]
+enemies = [NodePath("../Enemy"), NodePath("../Enemy2")]
+
+[node name="Camera2D2" type="Camera2D" parent="Character"]
+
+[node name="Enemy" parent="." instance=ExtResource("2_kodl0")]
+position = Vector2(851, 274)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_kodl0")]
+position = Vector2(223, 145)
