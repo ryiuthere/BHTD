@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://cfb7ytrgs1muf"]
+[gd_scene load_steps=4 format=3 uid="uid://cfb7ytrgs1muf"]
 
-[node name="TempEvilMage" type="Area2D"]
+[ext_resource type="Script" path="res://Assets/Scripts/Entity/Enemies/TempEvilMage.gd" id="1_ydjgh"]
+[ext_resource type="SpriteFrames" uid="uid://bllxp2suk0x7a" path="res://Assets/Sprites/Animation/TempEvilMage.tres" id="2_ih0ak"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffbop"]
+radius = 17.0
+
+[node name="TempEvilMage" type="CharacterBody2D"]
+script = ExtResource("1_ydjgh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("2_ih0ak")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ffbop")
