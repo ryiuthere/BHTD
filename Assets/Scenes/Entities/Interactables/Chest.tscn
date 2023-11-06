@@ -8,6 +8,8 @@ radius = 12.0
 height = 34.0
 
 [node name="Chest" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 47
 script = ExtResource("1_w3cdm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
