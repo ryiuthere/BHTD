@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://3lki2j1k3r0b"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Entity/Heroes/Mage.gd" id="1_k35ab"]
+[ext_resource type="SpriteFrames" uid="uid://ddhi6t1uxrimb" path="res://Assets/Sprites/Animation/Mage.tres" id="2_15qw5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pwfei"]
+radius = 22.0907
+
+[node name="Mage" type="CharacterBody2D"]
+script = ExtResource("1_k35ab")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("2_15qw5")
+animation = &"Walk"
+
+[node name="Collision Box" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pwfei")
