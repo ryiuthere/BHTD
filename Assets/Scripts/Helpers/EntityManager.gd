@@ -20,7 +20,6 @@ func closest_enemy(position : Vector2, max_distance : int) -> Enemy:
 	return closest_enemy
 
 func create_projectile(projectile : Constants.Projectile, position : Vector2, direction : Vector2) -> Projectile:
-	print(direction)
 	var instance = Loader.load_projectile(projectile)
 	instance.initialize(position, direction)
 	GameController.get_tree().current_scene.add_child(instance)
