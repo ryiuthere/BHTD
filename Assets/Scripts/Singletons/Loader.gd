@@ -14,5 +14,12 @@ func load_enemy(enemy: Constants.Enemy) -> Enemy:
 		_:
 			return null
 
+func load_projectile(projectile: Constants.Projectile) -> Projectile:
+	match(projectile):
+		Constants.Projectile.TempProjectile:
+			return load(Constants.PROJECTILES_PATH + "TempProjectile.tscn").instantiate() as Projectile
+		_:
+			return null
+
 func load_chest() -> Chest:
 	return load(Constants.INTERACTABLES_PATH + "Chest.tscn").instantiate() as Chest

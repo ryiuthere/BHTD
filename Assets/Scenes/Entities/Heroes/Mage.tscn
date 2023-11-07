@@ -7,12 +7,13 @@
 radius = 22.0907
 
 [node name="Mage" type="CharacterBody2D"]
+collision_mask = 58
 script = ExtResource("1_k35ab")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("2_15qw5")
-animation = &"Idle"
+animation = &"Walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pwfei")

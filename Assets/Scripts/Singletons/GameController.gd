@@ -1,10 +1,12 @@
 extends Node
 
-var chest : Chest
-var current_hero : Hero
-var _camera : Camera2D
+var entity_manager : EntityManager = EntityManager.new()
 
 var default_hero := Constants.Hero.Mage
+var chest : Chest
+var current_hero : Hero
+
+var _camera : Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,9 +29,8 @@ func _ready() -> void:
 	current_hero.set_current()
 	_main_root.add_child(current_hero)
 	
-	var tempEnemy = Loader.load_enemy(Constants.Enemy.TempEvilMage)
-	tempEnemy.position.x -= 300
-	_main_root.add_child(tempEnemy)
+	entity_manager.create_enemy(Constants.Enemy.TempEvilMage, Vector2(-300,0))
+	entity_manager.create_enemy(Constants.Enemy.TempEvilMage, Vector2(700,100))
 
 func set_camera_focus(node: Node) -> void:
 	var old_parent = _camera.get_parent()

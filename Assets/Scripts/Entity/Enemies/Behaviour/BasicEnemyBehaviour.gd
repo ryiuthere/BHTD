@@ -1,4 +1,4 @@
-class_name BasicBehaviour extends Behaviour
+class_name BasicEnemyBehaviour extends EnemyBehaviour
 
 const _distance := 300
 
