@@ -12,14 +12,8 @@ config_version=5
 
 config/name="BHTD"
 run/main_scene="res://Assets/Scenes/Main.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
-
-[autoload]
-
-Constants="*res://Assets/Scripts/Singletons/Constants.gd"
-Loader="*res://Assets/Scripts/Singletons/Loader.gd"
-GameController="*res://Assets/Scripts/Singletons/GameController.gd"
 
 [display]
 
