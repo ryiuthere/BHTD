@@ -28,7 +28,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	var angle = axis.angle()
 	if axis == Vector2.ZERO:
 		return Constants.STATE_NAME.IDLE
-	elif axis.y <= 0 or angle <= PI / 4 or angle >= 3 * PI / 4:
+	elif axis.y <= 0 or angle < Constants.CROUCH_ANGLE_MIN or angle > Constants.CROUCH_ANGLE_MAX:
 		if abs(axis.x) > Constants.WALK_RUN_SENSITIVITY * delta:
 			return Constants.STATE_NAME.RUN
 		else:
