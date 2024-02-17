@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr6bfvved0r3u"]
+
+[ext_resource type="PackedScene" uid="uid://clksbqtmf7u4k" path="res://Assets/Scenes/Character.tscn" id="1_c1j7q"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, -10)
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+polygon = PackedVector2Array(18, 36, 691, 36, 623, 169, 95, 172)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(18, 36, 95, 172, 623, 169, 691, 36)
+
+[node name="Character" parent="." instance=ExtResource("1_c1j7q")]
+position = Vector2(319, 18)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+zoom = Vector2(3, 3)
