@@ -25,11 +25,7 @@ func exit() -> void:
 
 func physics_process(_delta: float) -> Constants.STATE_NAME:
 	# Handle physics
-	character.move_and_slide()
-	if (character.is_on_floor()):
-		return Constants.STATE_NAME.IDLE
-	else:
-		return Constants.STATE_NAME.AIRBORNE
+	return Constants.STATE_NAME.IDLE
 
 func process(_delta: float) -> Constants.STATE_NAME:
 	# Handle input and animation

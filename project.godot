@@ -13,6 +13,7 @@ config_version=5
 config/name="BHTD"
 run/main_scene="res://Assets/Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +24,10 @@ Constants="*res://Assets/Scripts/Constants.gd"
 
 window/size/initial_position_type=0
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
 
 [input]
 

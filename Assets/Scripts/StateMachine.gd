@@ -11,7 +11,7 @@ func _ready() -> void:
 	for child in get_children():
 		if child is State:
 			states[child.get_state()] = child
-	current_state = states[Constants.STATE_NAME.IDLE]
+	current_state = states[Constants.STATE_NAME.AIRBORNE]
 	current_state.enter()
 
 func _physics_process(delta) -> void:

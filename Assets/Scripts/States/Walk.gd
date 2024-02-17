@@ -2,7 +2,7 @@ class_name Walk
 extends State
 
 @export var WALK_FORCE := 5000
-@export var MAX_WALK_SPEED := 500
+@export var MAX_WALK_SPEED := 100
 
 var curr_axis: float
 
@@ -21,18 +21,23 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 	character.velocity.x += WALK_FORCE * delta * curr_axis
 	if (abs(character.velocity.x) > MAX_WALK_SPEED):
 		character.velocity.x = clamp(character.velocity.x, -MAX_WALK_SPEED, MAX_WALK_SPEED)
-	super(delta)
+	character.move_and_slide()
 	return Constants.STATE_NAME.WALK
 
 func process(delta: float) -> Constants.STATE_NAME:
-	var next_axis = Input.get_axis("Left", "Right")
-	var dist = next_axis - curr_axis
+	var next_axis := Input.get_vector("Left", "Right", "Up", "Down")
+	var angle = next_axis.angle()
+	var distx = next_axis.x - curr_axis
 	var next_state
-	if next_axis == 0:
+	if (Input.is_action_just_pressed("Jump")):
+		next_state = Constants.STATE_NAME.AIRBORNE
+	elif next_axis.y > 0 and angle > PI / 4 and angle < 3 * PI / 4:
+		next_state = Constants.STATE_NAME.CROUCH
+	elif next_axis.x == 0:
 		next_state = Constants.STATE_NAME.IDLE
-	elif dist > Constants.WALK_RUN_SENSITIVITY * delta and abs(next_axis) > abs(curr_axis):
+	elif abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(next_axis.x) > abs(curr_axis):
 		next_state = Constants.STATE_NAME.RUN
 	else:
 		next_state = Constants.STATE_NAME.WALK
-	curr_axis = next_axis
+	curr_axis = next_axis.x
 	return next_state
