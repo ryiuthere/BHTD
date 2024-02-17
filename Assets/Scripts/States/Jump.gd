@@ -24,7 +24,7 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	if (curr_axis != 0):
+	if (abs(curr_axis) < Constants.FLOAT_DEADZONE):
 		sprite.flip_h = curr_axis < 0
 	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
 	character.velocity.x = character.velocity.x + AIR_MOVE_FORCE * delta * curr_axis
@@ -36,7 +36,7 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 		character.velocity.y += Constants.GRAVITY * delta
 	character.move_and_slide()
 	if (character.is_on_floor()):
-		if curr_axis != 0:
+		if abs(curr_axis) > Constants.FLOAT_DEADZONE:
 			return Constants.STATE_NAME.RUN
 		else:
 			return Constants.STATE_NAME.IDLE
