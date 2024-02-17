@@ -1,4 +1,4 @@
-[gd_scene load_steps=172 format=3 uid="uid://clksbqtmf7u4k"]
+[gd_scene load_steps=173 format=3 uid="uid://clksbqtmf7u4k"]
 
 [ext_resource type="Texture2D" uid="uid://dppnqqekas87c" path="res://Assets/Raw/Character/Kaien_5_Air Idle.png" id="1_cmtv7"]
 [ext_resource type="Texture2D" uid="uid://bfrokca4lu5c4" path="res://Assets/Raw/Character/Kaien_7_Crouch.png" id="2_td6dd"]
@@ -10,8 +10,9 @@
 [ext_resource type="Script" path="res://Assets/Scripts/States/Idle.gd" id="8_l7428"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/Walk.gd" id="9_nmnb6"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/Run.gd" id="10_m54ck"]
-[ext_resource type="Script" path="res://Assets/Scripts/States/Airborne.gd" id="11_l7d2q"]
+[ext_resource type="Script" path="res://Assets/Scripts/States/Air.gd" id="11_u8bjh"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/Crouch.gd" id="12_x2pks"]
+[ext_resource type="Script" path="res://Assets/Scripts/States/Jump.gd" id="13_b56vd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmutg"]
 size = Vector2(24, 42)
@@ -1107,35 +1108,6 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_82hgv"]
-resource_name = "Airborne"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["Airborne"]
-}
-
 [sub_resource type="Animation" id="Animation_cf317"]
 resource_name = "Crouch"
 length = 1.23333
@@ -1280,9 +1252,38 @@ tracks/1/keys = {
 "values": ["Walk"]
 }
 
+[sub_resource type="Animation" id="Animation_82hgv"]
+resource_name = "Air"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Airborne"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vqyvv"]
 _data = {
-"Airborne": SubResource("Animation_82hgv"),
+"Air": SubResource("Animation_82hgv"),
 "Crouch": SubResource("Animation_cf317"),
 "Idle": SubResource("Animation_qfmme"),
 "Jump": SubResource("Animation_26f64"),
@@ -1300,7 +1301,7 @@ shape = SubResource("RectangleShape2D_vmutg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_q2usl")
-animation = &"Walk"
+animation = &"Jump"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1322,8 +1323,11 @@ script = ExtResource("9_nmnb6")
 [node name="Run" type="Node" parent="StateMachine"]
 script = ExtResource("10_m54ck")
 
-[node name="Airborne" type="Node" parent="StateMachine"]
-script = ExtResource("11_l7d2q")
+[node name="Air" type="Node" parent="StateMachine"]
+script = ExtResource("11_u8bjh")
 
 [node name="Crouch" type="Node" parent="StateMachine"]
 script = ExtResource("12_x2pks")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("13_b56vd")

@@ -17,11 +17,13 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	sprite.flip_h = curr_axis < 0
+	sprite.flip_h = curr_axis < 0	
 	character.velocity.x += WALK_FORCE * delta * curr_axis
 	if (abs(character.velocity.x) > MAX_WALK_SPEED):
 		character.velocity.x = clamp(character.velocity.x, -MAX_WALK_SPEED, MAX_WALK_SPEED)
 	character.move_and_slide()
+	if !character.is_on_floor():
+		return Constants.STATE_NAME.AIR
 	return Constants.STATE_NAME.WALK
 
 func process(delta: float) -> Constants.STATE_NAME:
@@ -30,7 +32,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	var distx = next_axis.x - curr_axis
 	var next_state
 	if (Input.is_action_just_pressed("Jump")):
-		next_state = Constants.STATE_NAME.AIRBORNE
+		next_state = Constants.STATE_NAME.JUMP
 	elif next_axis.y > 0 and angle > PI / 4 and angle < 3 * PI / 4:
 		next_state = Constants.STATE_NAME.CROUCH
 	elif next_axis.x == 0:

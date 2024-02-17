@@ -4,13 +4,13 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="Area2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-1, -10)
 
-[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(18, 36, 691, 36, 623, 169, 95, 172)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(18, 36, 95, 172, 623, 169, 691, 36)
 one_way_collision_margin = 8.1
 

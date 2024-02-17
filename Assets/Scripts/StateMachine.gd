@@ -11,8 +11,9 @@ func _ready() -> void:
 	for child in get_children():
 		if child is State:
 			states[child.get_state()] = child
-	current_state = states[Constants.STATE_NAME.AIRBORNE]
+	current_state = states[Constants.STATE_NAME.AIR]
 	current_state.enter()
+	character.velocity.y = 0
 
 func _physics_process(delta) -> void:
 	var next_state = current_state.physics_process(delta)
