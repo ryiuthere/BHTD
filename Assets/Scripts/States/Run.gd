@@ -10,6 +10,7 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.RUN
 
 func enter() -> void:
+	stateMachine.can_double_jump = true
 	curr_axis = Input.get_axis("Left", "Right");
 	stateMachine.animator.play("Run")
 

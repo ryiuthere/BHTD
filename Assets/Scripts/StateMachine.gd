@@ -7,6 +7,8 @@ var states: Dictionary
 @export var character: CharacterBody2D
 @export var sprite: AnimatedSprite2D
 
+var can_double_jump := false
+
 func _ready() -> void:
 	for child in get_children():
 		if child is State:

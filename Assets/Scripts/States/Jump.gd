@@ -7,15 +7,14 @@ extends State
 @export var MAX_AIR_SPEED := 300
 
 var curr_axis: float
-var falling: bool
-var fast_fall: bool
 var jump_hold: bool
 
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.JUMP
 
 func enter() -> void:
-	character.velocity.y -= INITIAL_JUMP_FORCE
+	stateMachine.can_double_jump = true
+	character.velocity.y = -INITIAL_JUMP_FORCE
 	curr_axis = Input.get_axis("Left", "Right");
 	stateMachine.animator.play("Jump")
 	jump_hold = true
@@ -41,11 +40,11 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.JUMP
 
 func process(_delta: float) -> Constants.STATE_NAME:
-	if (!falling and character.velocity.y >= 0):
+	if (character.velocity.y >= 0):
 		return Constants.STATE_NAME.AIR
+	if (!jump_hold and InputBuffer.is_action_press_buffered("Jump") and stateMachine.can_double_jump):
+		return Constants.STATE_NAME.DOUBLEJUMP
 	curr_axis = Input.get_axis("Left", "Right")
-	if (!fast_fall and falling and InputBuffer.is_action_press_buffered("Down")):
-		fast_fall = true
-	if (jump_hold and !Input.is_action_pressed("Jump")):
+	if (jump_hold and !Input.is_action_pressed("Jump") and !InputBuffer.is_action_press_buffered("Jump")):
 		jump_hold = false
 	return Constants.STATE_NAME.JUMP

@@ -11,6 +11,7 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
+	stateMachine.can_double_jump = true
 	character.velocity.x *= (1 - Constants.FRICTION * delta)
 	character.move_and_slide()
 	if !character.is_on_floor():

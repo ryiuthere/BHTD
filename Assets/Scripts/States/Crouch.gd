@@ -7,6 +7,7 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.CROUCH
 
 func enter() -> void:
+	stateMachine.can_double_jump = true
 	stateMachine.animator.play("Crouch")
 
 func exit() -> void:
