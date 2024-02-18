@@ -31,10 +31,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	var angle = next_axis.angle()
 	var distx = next_axis.x - curr_axis
 	var next_state
-	print('.')
-	print(angle)
-	print(Constants.CROUCH_ANGLE_MIN)
-	if (Input.is_action_just_pressed("Jump")):
+	if (InputBuffer.is_action_press_buffered("Jump")):
 		next_state = Constants.STATE_NAME.JUMP
 	elif next_axis.y > 0 and angle > Constants.CROUCH_ANGLE_MIN and angle < Constants.CROUCH_ANGLE_MAX:
 		next_state = Constants.STATE_NAME.CROUCH

@@ -24,8 +24,6 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	if (abs(curr_axis) < Constants.FLOAT_DEADZONE):
-		sprite.flip_h = curr_axis < 0
 	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
 	character.velocity.x = character.velocity.x + AIR_MOVE_FORCE * delta * curr_axis
 	if (abs(character.velocity.x) > MAX_AIR_SPEED):
@@ -46,7 +44,7 @@ func process(_delta: float) -> Constants.STATE_NAME:
 	if (!falling and character.velocity.y >= 0):
 		return Constants.STATE_NAME.AIR
 	curr_axis = Input.get_axis("Left", "Right")
-	if (!fast_fall and falling and Input.is_action_just_pressed("Down")):
+	if (!fast_fall and falling and InputBuffer.is_action_press_buffered("Down")):
 		fast_fall = true
 	if (jump_hold and !Input.is_action_pressed("Jump")):
 		jump_hold = false
