@@ -1,7 +1,7 @@
 class_name Walk
 extends State
 
-@export var WALK_FORCE := 5000
+@export var WALK_FORCE := 3000
 @export var MAX_WALK_SPEED := 100
 
 func get_state() -> Constants.STATE_NAME:
@@ -15,7 +15,7 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	sprite.flip_h = curr_axis.x < 0
+	check_sprite_direction()
 	apply_horizontal_movement(delta, WALK_FORCE, MAX_WALK_SPEED)
 	return ground_physics(delta, false)
 

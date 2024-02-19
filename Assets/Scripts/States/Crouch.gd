@@ -12,8 +12,7 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	if (abs(curr_axis.x) > Constants.FLOAT_DEADZONE):
-		sprite.flip_h = curr_axis.x < 0
+	check_sprite_direction()
 	return ground_physics(delta)
 
 func process(delta: float) -> Constants.STATE_NAME:

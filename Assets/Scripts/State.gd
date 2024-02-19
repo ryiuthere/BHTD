@@ -68,6 +68,10 @@ func apply_horizontal_movement(delta: float, force: float, max_speed: float):
 	if (abs(character.velocity.x) > max_speed):
 		character.velocity.x = clamp(character.velocity.x, -max_speed, max_speed)
 
+func check_sprite_direction():
+	if abs(curr_axis.x) > Constants.FLOAT_DEADZONE:
+		sprite.flip_h = curr_axis.x < 0 
+
 func is_run_input(delta: float):
 	var distx = curr_axis.x - prev_axis.x
 	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) > abs(prev_axis.x)
