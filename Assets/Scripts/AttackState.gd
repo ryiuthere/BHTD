@@ -6,8 +6,8 @@ var character : CharacterBody2D
 var animator : AnimationPlayer
 var sprite : AnimatedSprite2D
 
-func get_state() -> Constants.STATE_NAME:
-	return Constants.STATE_NAME.IDLE
+func get_state() -> Constants.ATTACK_STATE_NAME:
+	return Constants.ATTACK_STATE_NAME.L5
 
 func setup(stateHandler: StateMachine) -> void:
 	stateMachine = stateHandler as StateMachine
@@ -23,10 +23,10 @@ func exit() -> void:
 	# Clean up
 	pass
 
-func physics_process(_delta: float) -> Constants.STATE_NAME:
+func physics_process(_delta: float) -> Constants.ATTACK_STATE_NAME:
 	# Handle physics
-	return Constants.STATE_NAME.IDLE
+	return Constants.ATTACK_STATE_NAME.L5
 
-func process(_delta: float) -> Constants.STATE_NAME:
+func process(_delta: float) -> Constants.ATTACK_STATE_NAME:
 	# Handle input and animation
-	return Constants.STATE_NAME.IDLE
+	return Constants.ATTACK_STATE_NAME.L5

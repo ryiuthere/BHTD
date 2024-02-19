@@ -6,6 +6,9 @@ var character : CharacterBody2D
 var animator : AnimationPlayer
 var sprite : AnimatedSprite2D
 
+var prev_axis := Vector2.ZERO
+var curr_axis := Vector2.ZERO
+
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.IDLE
 
@@ -25,8 +28,46 @@ func exit() -> void:
 
 func physics_process(_delta: float) -> Constants.STATE_NAME:
 	# Handle physics
-	return Constants.STATE_NAME.IDLE
+	return get_state()
 
 func process(_delta: float) -> Constants.STATE_NAME:
 	# Handle input and animation
-	return Constants.STATE_NAME.IDLE
+	get_axis()
+	return get_state()
+
+func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
+	if apply_friction:
+		character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
+	character.velocity.y += Constants.GRAVITY * delta
+	character.move_and_slide()
+	if (character.is_on_floor()):
+		if curr_axis.x != 0:
+			return Constants.STATE_NAME.RUN
+		else:
+			return Constants.STATE_NAME.IDLE
+	return get_state()
+
+func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
+	if apply_friction:
+		character.velocity.x *= (1 - Constants.FRICTION * delta)
+	character.move_and_slide()
+	if !character.is_on_floor():
+		return Constants.STATE_NAME.AIR
+	return get_state()
+
+func get_axis():
+	prev_axis = curr_axis
+	curr_axis = Input.get_vector("Left", "Right", "Up", "Down")
+
+func is_crouch_angle():
+	var angle = curr_axis.angle()
+	return curr_axis.y > 0 and angle > Constants.CROUCH_ANGLE_MIN and angle < Constants.CROUCH_ANGLE_MAX
+
+func apply_horizontal_movement(delta: float, force: float, max_speed: float):
+	character.velocity.x += force * delta * curr_axis.x
+	if (abs(character.velocity.x) > max_speed):
+		character.velocity.x = clamp(character.velocity.x, -max_speed, max_speed)
+
+func is_run_input(delta: float):
+	var distx = curr_axis.x - prev_axis.x
+	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) > abs(prev_axis.x)

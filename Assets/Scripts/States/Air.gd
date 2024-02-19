@@ -6,14 +6,12 @@ extends State
 @export var MAX_AIR_SPEED := 300
 @export var MAX_FALL_SPEED := 350
 
-var curr_axis: float
 var fast_fall: bool
 
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.AIR
 
 func enter() -> void:
-	curr_axis = Input.get_axis("Left", "Right");
 	stateMachine.animator.play("Air")
 	fast_fall = false
 
@@ -21,26 +19,15 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
-	character.velocity.x = character.velocity.x + AIR_MOVE_FORCE * delta * curr_axis
-	if (abs(character.velocity.x) > MAX_AIR_SPEED):
-		character.velocity.x = clamp(character.velocity.x, -MAX_AIR_SPEED, MAX_AIR_SPEED)
+	apply_horizontal_movement(delta, AIR_MOVE_FORCE, MAX_AIR_SPEED)
 	if fast_fall:
 		character.velocity.y = MAX_FALL_SPEED + 150
-	else:
-		character.velocity.y += Constants.GRAVITY * delta
-	character.move_and_slide()
-	if (character.is_on_floor()):
-		if curr_axis != 0:
-			return Constants.STATE_NAME.RUN
-		else:
-			return Constants.STATE_NAME.IDLE
-	return Constants.STATE_NAME.AIR
+	return air_physics(delta)
 
-func process(_delta: float) -> Constants.STATE_NAME:
+func process(delta: float) -> Constants.STATE_NAME:
+	super(delta)
 	if (InputBuffer.is_action_press_buffered("Jump") and stateMachine.can_double_jump):
 		return Constants.STATE_NAME.DOUBLEJUMP
-	curr_axis = Input.get_axis("Left", "Right")
 	if (!fast_fall and InputBuffer.is_action_press_buffered("Down")):
 		fast_fall = true
 	return Constants.STATE_NAME.AIR
