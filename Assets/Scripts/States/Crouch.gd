@@ -1,35 +1,29 @@
 class_name Crouch
 extends State
 
-var curr_axisx: float = 0
-
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.CROUCH
 
 func enter() -> void:
+	stateMachine.can_double_jump = true
 	stateMachine.animator.play("Crouch")
 
 func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	if (curr_axisx != 0):
-		sprite.flip_h = curr_axisx < 0
-	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.25)
-	character.move_and_slide()
-	return Constants.STATE_NAME.CROUCH
+	check_sprite_direction()
+	return ground_physics(delta)
 
 func process(delta: float) -> Constants.STATE_NAME:
-	if (Input.is_action_just_pressed("Jump")):
-		return Constants.STATE_NAME.AIR
-	var axis := Input.get_vector("Left", "Right", "Up", "Down")
-	var angle = axis.angle()
-	if axis == Vector2.ZERO:
+	super(delta)
+	if (InputBuffer.is_action_press_buffered("Jump")):
+		return Constants.STATE_NAME.JUMP
+	if curr_axis == Vector2.ZERO:
 		return Constants.STATE_NAME.IDLE
-	elif axis.y <= 0 or angle < PI / 4 or angle > 3 * PI / 4:
-		if abs(axis.x) > Constants.WALK_RUN_SENSITIVITY * delta:
+	elif !is_crouch_angle():
+		if is_run_input(delta):
 			return Constants.STATE_NAME.RUN
 		else:
 			return Constants.STATE_NAME.WALK
-	curr_axisx = axis.x
 	return Constants.STATE_NAME.CROUCH
