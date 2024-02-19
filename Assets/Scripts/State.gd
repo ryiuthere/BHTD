@@ -55,23 +55,23 @@ func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAM
 		return Constants.STATE_NAME.AIR
 	return get_state()
 
-func get_axis():
+func get_axis() -> void:
 	prev_axis = curr_axis
 	curr_axis = Input.get_vector("Left", "Right", "Up", "Down")
 
-func is_crouch_angle():
+func is_crouch_angle() -> bool:
 	var angle = curr_axis.angle()
 	return curr_axis.y > 0 and angle > Constants.CROUCH_ANGLE_MIN and angle < Constants.CROUCH_ANGLE_MAX
 
-func apply_horizontal_movement(delta: float, force: float, max_speed: float):
+func apply_horizontal_movement(delta: float, force: float, max_speed: float) -> void:
 	character.velocity.x += force * delta * curr_axis.x
 	if (abs(character.velocity.x) > max_speed):
 		character.velocity.x = clamp(character.velocity.x, -max_speed, max_speed)
 
-func check_sprite_direction():
+func check_sprite_direction() -> void:
 	if abs(curr_axis.x) > Constants.FLOAT_DEADZONE:
 		sprite.flip_h = curr_axis.x < 0 
 
-func is_run_input(delta: float):
+func is_run_input(delta: float) -> bool:
 	var distx = curr_axis.x - prev_axis.x
-	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) > abs(prev_axis.x)
+	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) >= abs(prev_axis.x)
