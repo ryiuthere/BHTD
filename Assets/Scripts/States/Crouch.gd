@@ -5,6 +5,8 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.CROUCH
 
 func enter() -> void:
+	prev_axis = Vector2.ZERO
+	curr_axis = Vector2.ZERO
 	stateMachine.can_double_jump = true
 	stateMachine.animator.play("Crouch")
 

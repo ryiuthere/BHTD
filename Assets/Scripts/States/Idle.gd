@@ -5,6 +5,10 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.IDLE
 
 func enter() -> void:
+	# Setting to zero is required to prevent a rare bug where entering and 
+	# leaving idle in 1 frame would force a walk, even if it should be a run
+	prev_axis = Vector2.ZERO
+	curr_axis = Vector2.ZERO
 	stateMachine.can_double_jump = true
 	animator.play("Idle")
 
