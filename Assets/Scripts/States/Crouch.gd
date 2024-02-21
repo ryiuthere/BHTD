@@ -23,7 +23,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 		return Constants.STATE_NAME.JUMP
 	if curr_axis == Vector2.ZERO:
 		return Constants.STATE_NAME.IDLE
-	elif !is_crouch_angle():
+	elif !is_down_angle():
 		if is_run_input(delta):
 			return Constants.STATE_NAME.RUN
 		else:

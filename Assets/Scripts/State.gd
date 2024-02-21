@@ -59,9 +59,16 @@ func get_axis() -> void:
 	prev_axis = curr_axis
 	curr_axis = Input.get_vector("Left", "Right", "Up", "Down")
 
-func is_crouch_angle() -> bool:
+func is_down_angle() -> bool:
 	var angle = curr_axis.angle()
-	return curr_axis.y > 0 and angle > Constants.CROUCH_ANGLE_MIN and angle < Constants.CROUCH_ANGLE_MAX
+	return curr_axis.y > 0 and angle > Constants.DOWN_ANGLE_MIN and angle < Constants.DOWN_ANGLE_MAX
+
+func is_up_angle() -> bool:
+	var angle = curr_axis.angle()
+	return curr_axis.y < 0 and angle > Constants.UP_ANGLE_MIN and angle < Constants.UP_ANGLE_MAX
+	
+func is_side_angle() -> bool:
+	return curr_axis != Vector2.ZERO and !is_down_angle() and !is_up_angle()
 
 func apply_horizontal_movement(delta: float, force: float, max_speed: float) -> void:
 	character.velocity.x += force * delta * curr_axis.x

@@ -23,10 +23,14 @@ func exit() -> void:
 	# Clean up
 	pass
 
-func physics_process(_delta: float) -> Constants.ATTACK_STATE_NAME:
+func physics_process(_delta: float) -> Constants.STATE_NAME:
 	# Handle physics
-	return Constants.ATTACK_STATE_NAME.L5
+	return Constants.STATE_NAME.IDLE
 
-func process(_delta: float) -> Constants.ATTACK_STATE_NAME:
+func process(_delta: float) -> Constants.STATE_NAME:
 	# Handle input and animation
-	return Constants.ATTACK_STATE_NAME.L5
+	return Constants.STATE_NAME.IDLE
+
+func process_attack_cancel() -> Constants.ATTACK_STATE_NAME:
+	# Handle checking for cancels during moves
+	return Constants.ATTACK_STATE_NAME.NONE
