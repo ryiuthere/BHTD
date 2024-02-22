@@ -1,7 +1,7 @@
 class_name Run
 extends State
 
-@export var RUN_FORCE := 4000
+@export var RUN_FORCE := 3000
 @export var MAX_RUN_SPEED := 300
 
 func get_state() -> Constants.STATE_NAME:

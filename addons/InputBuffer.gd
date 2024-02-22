@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 		if !event.pressed or event.is_echo():
 			return
 
-		var scancode: int = event.keycode
+		var scancode: int = event.physical_keycode
 		keyboard_timestamps[scancode] = Time.get_ticks_msec()
 	elif event is InputEventJoypadButton:
 		if !event.pressed or event.is_echo():
@@ -44,7 +44,7 @@ func _input(event: InputEvent) -> void:
 
 
 # Returns whether any of the keyboard keys or joypad buttons in the given action were pressed within the buffer window.
-func is_action_press_buffered(action: String) -> bool:
+func is_action_press_buffered(action: String, invalidate := true) -> bool:
 	# Get the inputs associated with the action. If any one of them was pressed in the last BUFFER_WINDOW milliseconds,
 	# the action is buffered.
 	for event in InputMap.action_get_events(action):
@@ -53,7 +53,8 @@ func is_action_press_buffered(action: String) -> bool:
 			if keyboard_timestamps.has(scancode):
 				if Time.get_ticks_msec() - keyboard_timestamps[scancode] <= BUFFER_WINDOW:
 					# Prevent this method from returning true repeatedly and registering duplicate actions.
-					_invalidate_action(action)
+					if invalidate:
+						_invalidate_action(action)
 					
 					return true;
 		elif event is InputEventJoypadButton:
@@ -61,7 +62,8 @@ func is_action_press_buffered(action: String) -> bool:
 			if joypad_timestamps.has(button_index):
 				var delta = Time.get_ticks_msec() - joypad_timestamps[button_index]
 				if delta <= BUFFER_WINDOW:
-					_invalidate_action(action)
+					if invalidate:
+						_invalidate_action(action)
 					return true
 		elif event is InputEventJoypadMotion:
 			if abs(event.axis_value) < JOY_DEADZONE:
@@ -70,7 +72,8 @@ func is_action_press_buffered(action: String) -> bool:
 			if joypad_timestamps.has(axis_code):
 				var delta = Time.get_ticks_msec() - joypad_timestamps[axis_code]
 				if delta <= BUFFER_WINDOW:
-					_invalidate_action(action)
+					if invalidate:
+						_invalidate_action(action)
 					return true
 	# If there's ever a third type of buffer-able action (mouse clicks maybe?), it'd probably be worth it to generalize
 	# the repetitive keyboard/joypad code into something that works for any input method. Until then, by the YAGNI
