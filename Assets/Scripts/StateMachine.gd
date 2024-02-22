@@ -9,6 +9,8 @@ var states: Dictionary
 @export var character: CharacterBody2D
 @export var sprite: AnimatedSprite2D
 
+@export var attack_status := Constants.ATTACK_STATUS.NONE
+
 var can_double_jump := false
 
 func _ready() -> void:
@@ -31,4 +33,5 @@ func enter_state(next_state: Constants.STATE_NAME) -> void:
 	if next_state != current_state.get_state() and states.has(next_state):
 		current_state.exit()
 		current_state = states[next_state]
+		current_state.get_axis()
 		current_state.enter()

@@ -12,7 +12,7 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.AIR
 
 func enter() -> void:
-	stateMachine.animator.play("Air")
+	stateMachine.animator.play(Constants.AIR)
 	fast_fall = false
 
 func exit() -> void:
@@ -26,8 +26,10 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 
 func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
-	if (InputBuffer.is_action_press_buffered("Jump") and stateMachine.can_double_jump):
+	if (InputBuffer.is_action_press_buffered(Constants.JUMP) and stateMachine.can_double_jump):
 		return Constants.STATE_NAME.DOUBLEJUMP
-	if (!fast_fall and InputBuffer.is_action_press_buffered("Down")):
+	elif is_attack_input():
+		return Constants.STATE_NAME.AIRATTACK
+	if (!fast_fall and InputBuffer.is_action_press_buffered(Constants.DOWN)):
 		fast_fall = true
 	return Constants.STATE_NAME.AIR
