@@ -31,7 +31,7 @@ func physics_process(_delta: float) -> Constants.STATE_NAME:
 	return get_state()
 
 func process(_delta: float) -> Constants.STATE_NAME:
-	# Handle input and animation
+	# Handle input
 	get_axis()
 	return get_state()
 
@@ -59,9 +59,16 @@ func get_axis() -> void:
 	prev_axis = curr_axis
 	curr_axis = Input.get_vector("Left", "Right", "Up", "Down")
 
-func is_crouch_angle() -> bool:
+func is_down_angle() -> bool:
 	var angle = curr_axis.angle()
-	return curr_axis.y > 0 and angle > Constants.CROUCH_ANGLE_MIN and angle < Constants.CROUCH_ANGLE_MAX
+	return curr_axis.y > 0 and angle > Constants.DOWN_ANGLE_MIN and angle < Constants.DOWN_ANGLE_MAX
+
+func is_up_angle() -> bool:
+	var angle = curr_axis.angle()
+	return curr_axis.y < 0 and angle > Constants.UP_ANGLE_MIN and angle < Constants.UP_ANGLE_MAX
+	
+func is_side_angle() -> bool:
+	return curr_axis != Vector2.ZERO and !is_down_angle() and !is_up_angle()
 
 func apply_horizontal_movement(delta: float, force: float, max_speed: float) -> void:
 	character.velocity.x += force * delta * curr_axis.x
@@ -75,3 +82,9 @@ func check_sprite_direction() -> void:
 func is_run_input(delta: float) -> bool:
 	var distx = curr_axis.x - prev_axis.x
 	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) >= abs(prev_axis.x)
+
+func is_attack_input() -> bool:
+	var light = InputBuffer.is_action_press_buffered(Constants.LIGHT)
+	var mid = InputBuffer.is_action_press_buffered(Constants.MID)
+	var heavy = InputBuffer.is_action_press_buffered(Constants.HEAVY)
+	return light or mid or heavy

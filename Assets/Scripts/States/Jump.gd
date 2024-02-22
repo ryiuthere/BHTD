@@ -32,6 +32,8 @@ func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if (!jump_hold and InputBuffer.is_action_press_buffered("Jump") and stateMachine.can_double_jump):
 		return Constants.STATE_NAME.DOUBLEJUMP
+	elif is_attack_input():
+		return Constants.STATE_NAME.AIRATTACK
 	if (jump_hold and !Input.is_action_pressed("Jump") and !InputBuffer.is_action_press_buffered("Jump")):
 		jump_hold = false
 	return Constants.STATE_NAME.JUMP
