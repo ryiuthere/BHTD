@@ -1941,7 +1941,7 @@ shape = SubResource("RectangleShape2D_vmutg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_q2usl")
-animation = &"Airborne"
+animation = &"L2"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
