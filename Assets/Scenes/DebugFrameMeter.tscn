@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddk53k3tm8l6e"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Debug Tools/DebugFrameMeter.gd" id="1_a6ao6"]
+
+[node name="DebugFrameMeter" type="Node2D"]
+script = ExtResource("1_a6ao6")
+SIZE_FRAMES = null
+RECT_SIZE = null
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+theme_override_constants/separation = 1
+
+[node name="FrameMeterText" type="Label" parent="."]
+offset_top = 12.0
+offset_right = 40.0
+offset_bottom = 35.0

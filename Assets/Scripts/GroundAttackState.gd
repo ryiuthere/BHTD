@@ -1,10 +1,5 @@
-class_name AttackState
-extends Node
-
-var stateMachine : StateMachine
-var character : CharacterBody2D
-var animator : AnimationPlayer
-var sprite : AnimatedSprite2D
+class_name GroundAttackState
+extends BaseState
 
 func get_state() -> Constants.ATTACK_STATE_NAME:
 	return Constants.ATTACK_STATE_NAME.L5
@@ -23,10 +18,13 @@ func exit() -> void:
 	# Clean up
 	pass
 
-func physics_process(_delta: float) -> Constants.ATTACK_STATE_NAME:
+func physics_process(_delta: float) -> void:
 	# Handle physics
-	return Constants.ATTACK_STATE_NAME.L5
+	pass
 
-func process(_delta: float) -> Constants.ATTACK_STATE_NAME:
-	# Handle input and animation
-	return Constants.ATTACK_STATE_NAME.L5
+func process_attack(_delta: float) -> Constants.ATTACK_STATE_NAME:
+	# Handle input
+	if stateMachine.attack_status == Constants.ATTACK_STATUS.NONE:
+		return Constants.ATTACK_STATE_NAME.NONE
+	else:
+		return get_state()
