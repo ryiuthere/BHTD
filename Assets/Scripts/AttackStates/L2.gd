@@ -6,4 +6,3 @@ func get_state() -> Constants.ATTACK_STATE_NAME:
 
 func enter() -> void:
 	animator.play("L2")
-	pass

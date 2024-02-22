@@ -18,12 +18,11 @@ func get_state() -> Constants.STATE_NAME:
 func enter() -> void:
 	check_sprite_direction()
 	var attack := get_attack_from_input()
-	if attacks.has(attack):
-		current_attack = attacks[attack]
-		current_attack.enter()
+	try_start_attack(attack)
 
 func exit() -> void:
 	# Clean up hitboxes
+	stateMachine.attack_status = Constants.ATTACK_STATUS.NONE
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
@@ -36,26 +35,29 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if current_attack != null:
-		var attack_input := get_attack_from_input()
-		var next_action := current_attack.process_attack(delta, attack_input)
-		if next_action == Constants.NEXT_ATTACK_ACTION.CONTINUE:
+		var next_action := current_attack.process_attack(delta)
+		if next_action == current_attack.get_state():
 			return get_state()
-		elif next_action == Constants.NEXT_ATTACK_ACTION.GROUND_ATTACK:
-			current_attack = attacks[attack_input]
-		elif next_action == Constants.NEXT_ATTACK_ACTION.AIR_ATTACK:
-			return Constants.STATE_NAME.AIRATTACK
-		elif next_action == Constants.NEXT_ATTACK_ACTION.JUMP:
+		elif next_action == Constants.ATTACK_STATE_NAME.JUMP:
 			return Constants.STATE_NAME.JUMP
+		elif next_action == Constants.ATTACK_STATE_NAME.NONE:
+			pass
+		else:
+			if try_start_attack(next_action):
+				return get_state()
+	var attack_input := get_attack_from_input()
+	if attack_input != Constants.ATTACK_STATE_NAME.NONE and try_start_attack(attack_input):
+		return get_state()
 	if is_down_angle():
 		return Constants.STATE_NAME.CROUCH
 	else:
 		return Constants.STATE_NAME.IDLE
 
-func get_attack_from_input() -> Constants.ATTACK_STATE_NAME:
+func get_attack_from_input(invalidate := true) -> Constants.ATTACK_STATE_NAME:
 	if InputBuffer.is_action_press_buffered(Constants.JUMP):
 		return Constants.ATTACK_STATE_NAME.JUMP
-	elif InputBuffer.is_action_press_buffered(Constants.BURST):
-		return Constants.ATTACK_STATE_NAME.BURST
+	elif InputBuffer.is_action_press_buffered(Constants.SURGE):
+		return Constants.ATTACK_STATE_NAME.SURGE
 	elif InputBuffer.is_action_press_buffered(Constants.BURST):
 		return Constants.ATTACK_STATE_NAME.BURST
 	elif InputBuffer.is_action_press_buffered(Constants.MID) and InputBuffer.is_action_press_buffered(Constants.HEAVY):
@@ -89,3 +91,11 @@ func get_attack_from_input() -> Constants.ATTACK_STATE_NAME:
 		elif InputBuffer.is_action_press_buffered(Constants.HEAVY):
 			return Constants.ATTACK_STATE_NAME.H5
 	return Constants.ATTACK_STATE_NAME.NONE
+
+func try_start_attack(attack : Constants.ATTACK_STATE_NAME) -> bool:
+	if attacks.has(attack):
+		check_sprite_direction()
+		current_attack = attacks[attack]
+		current_attack.enter()
+		return true
+	return false
