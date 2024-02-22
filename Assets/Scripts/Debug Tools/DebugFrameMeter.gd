@@ -20,7 +20,7 @@ const colors := [Color(1, 1, 1), Color(0, 1, 0.65), Color(1, 0, 0.3), Color(0.33
 1 - Atk Startup
 2 - Atk Active
 3 - Atk Recovery
-4 - Uncancellable Movement 
+4 - Uncancellable Movement (unused)
 """
 	
 func setup_add_rect(parent : HBoxContainer) -> void:
@@ -97,6 +97,6 @@ func _update_framemeter_state(attack_state : Constants.ATTACK_STATUS) -> void:
 		Constants.ATTACK_STATUS.STARTUP: current_state = STATES.STARTUP
 		Constants.ATTACK_STATUS.ACTIVE: current_state = STATES.ACTIVE
 		Constants.ATTACK_STATUS.RECOVERY: current_state = STATES.RECOVERY
-		Constants.ATTACK_STATUS.MOVEMENT: current_state = STATES.MOVEMENT
+		# Constants.ATTACK_STATUS.MOVEMENT: current_state = STATES.MOVEMENT
 	if not active and current_state != STATES.CLEAR:
 		active = true
