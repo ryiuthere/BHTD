@@ -12,7 +12,7 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.AIR
 
 func enter() -> void:
-	stateMachine.animator.play("Air")
+	stateMachine.animator.play(Constants.AIR)
 	fast_fall = false
 
 func exit() -> void:

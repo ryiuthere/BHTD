@@ -18,7 +18,13 @@ var UP_ANGLE_MIN := 5 * PI / 4 - FLOAT_DEADZONE
 var UP_ANGLE_MAX := 7 * PI / 4 + FLOAT_DEADZONE
 var FRAME_BUFFER := 3
 
+var IDLE := "Idle"
 var JUMP := "Jump"
+var DOUBLEJUMP := "DoubleJump"
+var WALK := "Walk"
+var RUN := "Run"
+var AIR := "Air"
+var CROUCH := "Crouch"
 var SURGE := "Surge"
 var BURST := "Burst"
 var PARRY := "Parry"

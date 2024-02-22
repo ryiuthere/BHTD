@@ -14,7 +14,7 @@ func get_state() -> Constants.STATE_NAME:
 func enter() -> void:
 	stateMachine.can_double_jump = true
 	character.velocity.y = -INITIAL_JUMP_FORCE
-	stateMachine.animator.play("Jump")
+	stateMachine.animator.play(Constants.JUMP)
 	jump_hold = true
 
 func exit() -> void:
@@ -30,10 +30,10 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 
 func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
-	if (!jump_hold and InputBuffer.is_action_press_buffered("Jump") and stateMachine.can_double_jump):
+	if (!jump_hold and InputBuffer.is_action_press_buffered(Constants.JUMP) and stateMachine.can_double_jump):
 		return Constants.STATE_NAME.DOUBLEJUMP
 	elif is_attack_input():
 		return Constants.STATE_NAME.AIRATTACK
-	if (jump_hold and !Input.is_action_pressed("Jump") and !InputBuffer.is_action_press_buffered("Jump")):
+	if (jump_hold and !Input.is_action_pressed(Constants.JUMP) and !InputBuffer.is_action_press_buffered(Constants.JUMP)):
 		jump_hold = false
 	return Constants.STATE_NAME.JUMP
