@@ -2,9 +2,10 @@ extends Node
 
 enum STATE_NAME {NONE, IDLE, CROUCH, WALK, RUN, JUMP, DOUBLEJUMP, AIR, ATTACK, AIRATTACK}
 enum ATTACK_STATE_NAME {NONE, L5, L2, L8, L6, M5, M2, M8, M6, H5, H2, H8, H6, SP,
-	AL5, AL2, AL8, AL6, AM5, AM2, AM8, AM6, ASP,
+	AL5, AL2, AL8, AL6, AL4, AM5, AM2, AM8, AM6, ASP,
 	JUMP, SURGE, BURST}
-enum ATTACK_STATUS {STARTUP, ACTIVE, RECOVERY}
+enum NEXT_ATTACK_ACTION {NONE, CONTINUE, GROUND_ATTACK, AIR_ATTACK, JUMP}
+enum ATTACK_STATUS {NONE, STARTUP, ACTIVE, RECOVERY}
 
 var WALK_RUN_SENSITIVITY := 10.0 # The lower, the easier to switch from idle/walking to running
 var RUN_WALK_SENSITIVITY := 0.01 # The lower, the harder to switch from running to walking
@@ -16,3 +17,15 @@ var DOWN_ANGLE_MAX := 3 * PI / 4 + FLOAT_DEADZONE
 var UP_ANGLE_MIN := 5 * PI / 4 - FLOAT_DEADZONE
 var UP_ANGLE_MAX := 7 * PI / 4 + FLOAT_DEADZONE
 var FRAME_BUFFER := 3
+
+var JUMP := "Jump"
+var SURGE := "Surge"
+var BURST := "Burst"
+var PARRY := "Parry"
+var LIGHT := "Light"
+var MID := "Mid"
+var HEAVY := "Heavy"
+var LEFT := "Left"
+var RIGHT := "Right"
+var UP := "Up"
+var DOWN := "Down"

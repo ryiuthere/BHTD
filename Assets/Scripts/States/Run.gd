@@ -24,6 +24,8 @@ func process(delta: float) -> Constants.STATE_NAME:
 	var distx = curr_axis.x - prev_axis.x
 	if (InputBuffer.is_action_press_buffered("Jump")):
 		return Constants.STATE_NAME.JUMP
+	elif is_attack_input():
+		return Constants.STATE_NAME.ATTACK
 	elif is_down_angle():
 		return Constants.STATE_NAME.CROUCH
 	elif curr_axis.x == 0:

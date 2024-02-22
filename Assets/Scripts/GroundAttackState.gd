@@ -1,4 +1,4 @@
-class_name AttackState
+class_name GroundAttackState
 extends Node
 
 var stateMachine : StateMachine
@@ -21,16 +21,16 @@ func enter() -> void:
 	
 func exit() -> void:
 	# Clean up
+	stateMachine.attack_status = Constants.ATTACK_STATUS.NONE
 	pass
 
-func physics_process(_delta: float) -> Constants.STATE_NAME:
+func physics_process(_delta: float) -> void:
 	# Handle physics
-	return Constants.STATE_NAME.IDLE
+	pass
 
-func process(_delta: float) -> Constants.STATE_NAME:
-	# Handle input and animation
-	return Constants.STATE_NAME.IDLE
-
-func process_attack_cancel() -> Constants.ATTACK_STATE_NAME:
-	# Handle checking for cancels during moves
-	return Constants.ATTACK_STATE_NAME.NONE
+func process_attack(_delta: float, _attack: Constants.ATTACK_STATE_NAME) -> Constants.NEXT_ATTACK_ACTION:
+	# Handle input
+	if stateMachine.attack_status == Constants.ATTACK_STATUS.NONE:
+		return Constants.NEXT_ATTACK_ACTION.NONE
+	else:
+		return Constants.NEXT_ATTACK_ACTION.CONTINUE

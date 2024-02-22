@@ -21,6 +21,8 @@ func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if (InputBuffer.is_action_press_buffered("Jump")):
 		return Constants.STATE_NAME.JUMP
+	elif is_attack_input():
+		return Constants.STATE_NAME.ATTACK
 	if curr_axis == Vector2.ZERO:
 		return Constants.STATE_NAME.IDLE
 	elif !is_down_angle():

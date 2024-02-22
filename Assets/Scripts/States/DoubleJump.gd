@@ -18,6 +18,6 @@ func exit() -> void:
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
 	if (character.velocity.y >= 0):
-		return Constants.STATE_NAME.AIR
+		return Constants.STATE_NAME.AIRATTACK
 	apply_horizontal_movement(delta, AIR_MOVE_FORCE, MAX_AIR_SPEED)
 	return air_physics(delta)
