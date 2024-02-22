@@ -1,6 +1,8 @@
 class_name StateMachine
 extends Node
 
+signal debug_frame_meter_state_change(old_state, new_state)
+
 var current_state: State
 var states: Dictionary
 @export var animator: AnimationPlayer

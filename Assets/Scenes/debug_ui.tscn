@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://blp6s1l05kjvw"]
+
+[ext_resource type="PackedScene" uid="uid://3nofofvd6j26" path="res://Assets/Scenes/DebugFrameMeter.tscn" id="1_g4tpx"]
+[ext_resource type="Script" path="res://Assets/Scripts/Debug Tools/DebugUI.gd" id="1_lb1iu"]
+
+[node name="DebugUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_lb1iu")
+
+[node name="DebugFrameMeter" parent="." instance=ExtResource("1_g4tpx")]

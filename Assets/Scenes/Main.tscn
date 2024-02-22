@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dr6bfvved0r3u"]
+[gd_scene load_steps=3 format=3 uid="uid://dr6bfvved0r3u"]
 
 [ext_resource type="PackedScene" uid="uid://clksbqtmf7u4k" path="res://Assets/Scenes/Character.tscn" id="1_c1j7q"]
+[ext_resource type="PackedScene" uid="uid://blp6s1l05kjvw" path="res://Assets/Scenes/debug_ui.tscn" id="2_pkhxp"]
 
 [node name="Main" type="Node2D"]
 
@@ -19,3 +20,6 @@ position = Vector2(181, -1)
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 zoom = Vector2(2, 2)
+
+[node name="DebugUI" parent="Character/Camera2D" node_paths=PackedStringArray("player") instance=ExtResource("2_pkhxp")]
+player = NodePath("../..")
