@@ -91,12 +91,12 @@ func _process(delta):
 		$FrameMeterText.text = "FM Off"
 	
 
-func _update_framemeter_state(state_name: String) -> void:
-	match state_name:
-		"neutral": current_state = STATES.CLEAR
-		"startup": current_state = STATES.STARTUP
-		"active": current_state = STATES.ACTIVE
-		"recovery": current_state = STATES.RECOVERY
-		"movement": current_state = STATES.MOVEMENT
+func _update_framemeter_state(attack_state : Constants.ATTACK_STATUS) -> void:
+	match attack_state:
+		Constants.ATTACK_STATUS.NONE: current_state = STATES.CLEAR
+		Constants.ATTACK_STATUS.STARTUP: current_state = STATES.STARTUP
+		Constants.ATTACK_STATUS.ACTIVE: current_state = STATES.ACTIVE
+		Constants.ATTACK_STATUS.RECOVERY: current_state = STATES.RECOVERY
+		Constants.ATTACK_STATUS.MOVEMENT: current_state = STATES.MOVEMENT
 	if not active and current_state != STATES.CLEAR:
 		active = true

@@ -4,7 +4,7 @@ enum STATE_NAME {NONE, IDLE, CROUCH, WALK, RUN, JUMP, DOUBLEJUMP, AIR, ATTACK, A
 enum ATTACK_STATE_NAME {NONE, L5, L2, L8, L6, M5, M2, M8, M6, H5, H2, H8, H6, SP,
 	AL5, AL2, AL8, AL6, AL4, AM5, AM2, AM8, AM6, ASP,
 	JUMP, SURGE, BURST}
-enum ATTACK_STATUS {NONE, STARTUP, ACTIVE, RECOVERY}
+enum ATTACK_STATUS {NONE, STARTUP, ACTIVE, RECOVERY, MOVEMENT}
 
 var WALK_RUN_SENSITIVITY := 10.0 # The lower, the easier to switch from idle/walking to running
 var RUN_WALK_SENSITIVITY := 0.01 # The lower, the harder to switch from running to walking

@@ -22,7 +22,7 @@ func enter() -> void:
 
 func exit() -> void:
 	# Clean up hitboxes
-	stateMachine.attack_status = Constants.ATTACK_STATUS.NONE
+	stateMachine.set_attack_status(Constants.ATTACK_STATUS.NONE)
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
@@ -97,5 +97,6 @@ func try_start_attack(attack : Constants.ATTACK_STATE_NAME) -> bool:
 		check_sprite_direction()
 		current_attack = attacks[attack]
 		current_attack.enter()
+		stateMachine.set_attack_status(Constants.ATTACK_STATUS.STARTUP)
 		return true
 	return false

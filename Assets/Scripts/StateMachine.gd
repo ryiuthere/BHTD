@@ -1,7 +1,7 @@
 class_name StateMachine
 extends Node
 
-signal debug_frame_meter_state_change(old_state, new_state)
+signal debug_status_change(next_state: Constants.ATTACK_STATUS)
 
 var current_state: State
 var states: Dictionary
@@ -35,3 +35,8 @@ func enter_state(next_state: Constants.STATE_NAME) -> void:
 		current_state = states[next_state]
 		current_state.get_axis()
 		current_state.enter()
+
+func set_attack_status(status: Constants.ATTACK_STATUS) -> void:
+	attack_status = status
+	debug_status_change.emit(status)
+	
