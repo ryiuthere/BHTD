@@ -53,7 +53,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	else:
 		return Constants.STATE_NAME.IDLE
 
-func get_attack_from_input(invalidate := true) -> Constants.ATTACK_STATE_NAME:
+func get_attack_from_input() -> Constants.ATTACK_STATE_NAME:
 	if InputBuffer.is_action_press_buffered(Constants.JUMP):
 		return Constants.ATTACK_STATE_NAME.JUMP
 	elif InputBuffer.is_action_press_buffered(Constants.SURGE):
