@@ -1,3 +1,4 @@
+class_name DebugFrameMeter
 extends Node2D
 
 @export var SIZE_FRAMES := 60
@@ -11,7 +12,7 @@ extends Node2D
 @onready var active := false
 
 
-enum STATES {CLEAR, STARTUP, ACTIVE, RECOVERY, MOVEMENT}
+enum STATES {CLEAR, STARTUP, ACTIVE, RECOVERY, HITSTOP}
 @onready var current_state := STATES.CLEAR
 
 const colors := [Color(1, 1, 1), Color(0, 1, 0.65), Color(1, 0, 0.3), Color(0.333, 0, 1), Color(1, 0.851, 0)]
@@ -20,7 +21,7 @@ const colors := [Color(1, 1, 1), Color(0, 1, 0.65), Color(1, 0, 0.3), Color(0.33
 1 - Atk Startup
 2 - Atk Active
 3 - Atk Recovery
-4 - Uncancellable Movement (unused)
+4 - Hit stop (unused)
 """
 	
 func setup_add_rect(parent : HBoxContainer) -> void:
@@ -97,6 +98,6 @@ func _update_framemeter_state(attack_state : Constants.ATTACK_STATUS) -> void:
 		Constants.ATTACK_STATUS.STARTUP: current_state = STATES.STARTUP
 		Constants.ATTACK_STATUS.ACTIVE: current_state = STATES.ACTIVE
 		Constants.ATTACK_STATUS.RECOVERY: current_state = STATES.RECOVERY
-		# Constants.ATTACK_STATUS.MOVEMENT: current_state = STATES.MOVEMENT
+		# Constants.ATTACK_STATUS.HITSTOP: current_state = STATES.HITSTOP
 	if not active and current_state != STATES.CLEAR:
 		active = true

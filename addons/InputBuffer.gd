@@ -6,7 +6,7 @@ extends Node
 
 # How many milliseconds ahead of time the player can make an input and have it still be recognized.
 # 50 milliseconds is 3 frames
-const BUFFER_WINDOW: int = 50
+const BUFFER_WINDOW: int = 70
 const JOY_DEADZONE: float = 0.1
 
 var keyboard_timestamps: Dictionary

@@ -16,13 +16,13 @@ func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.ATTACK
 
 func enter() -> void:
-	check_sprite_direction()
 	var attack := get_attack_from_input()
 	try_start_attack(attack)
 
 func exit() -> void:
 	# Clean up hitboxes
 	stateMachine.attack_status = Constants.ATTACK_STATUS.NONE
+	stateMachine.hitbox_controller.cleanup()
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
@@ -53,7 +53,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	else:
 		return Constants.STATE_NAME.IDLE
 
-func get_attack_from_input(invalidate := true) -> Constants.ATTACK_STATE_NAME:
+func get_attack_from_input() -> Constants.ATTACK_STATE_NAME:
 	if InputBuffer.is_action_press_buffered(Constants.JUMP):
 		return Constants.ATTACK_STATE_NAME.JUMP
 	elif InputBuffer.is_action_press_buffered(Constants.SURGE):
@@ -94,6 +94,7 @@ func get_attack_from_input(invalidate := true) -> Constants.ATTACK_STATE_NAME:
 
 func try_start_attack(attack : Constants.ATTACK_STATE_NAME) -> bool:
 	if attacks.has(attack):
+		stateMachine.attack_status = Constants.ATTACK_STATUS.STARTUP
 		check_sprite_direction()
 		current_attack = attacks[attack]
 		current_attack.enter()

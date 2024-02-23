@@ -24,7 +24,7 @@ func physics_process(_delta: float) -> void:
 
 func process_attack(_delta: float) -> Constants.ATTACK_STATE_NAME:
 	# Handle input
-	if stateMachine.attack_status == Constants.ATTACK_STATUS.NONE:
+	if !animator.is_playing():
 		return Constants.ATTACK_STATE_NAME.NONE
 	else:
 		return get_state()

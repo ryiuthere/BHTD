@@ -8,6 +8,7 @@ var states: Dictionary
 @export var animator: AnimationPlayer
 @export var character: CharacterBody2D
 @export var sprite: AnimatedSprite2D
+@export var hitbox_controller: HitboxController
 
 @export var attack_status := Constants.ATTACK_STATUS.NONE
 @onready var last_attack_status := Constants.ATTACK_STATUS.NONE
@@ -42,4 +43,9 @@ func check_for_new_attack_status() -> void:
 	if last_attack_status != attack_status:
 		debug_status_change.emit(attack_status)
 		last_attack_status = attack_status
-	
+
+func on_attack_status_change(active: bool) -> void:
+	if active and attack_status == Constants.ATTACK_STATUS.STARTUP or attack_status == Constants.ATTACK_STATUS.RECOVERY:
+		attack_status = Constants.ATTACK_STATUS.ACTIVE
+	elif !active and attack_status == Constants.ATTACK_STATUS.ACTIVE:
+		attack_status = Constants.ATTACK_STATUS.RECOVERY
