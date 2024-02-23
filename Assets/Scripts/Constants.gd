@@ -34,3 +34,9 @@ var LEFT := "Left"
 var RIGHT := "Right"
 var UP := "Up"
 var DOWN := "Down"
+
+var _id := -1
+
+func next_id() -> int:
+	_id = _id + 1
+	return _id
