@@ -25,6 +25,7 @@ func _ready() -> void:
 			hitboxes.append(child)
 
 func _process(_delta: float) -> void:
+	scale.x = -1 if sprite.flip_h else 1
 	for hitbox in hitboxes:
 		if hitbox is Hitbox and hitbox.collider.visible:
 			set_attack_status(true)
@@ -52,5 +53,5 @@ func _on_hurtbox_area_entered(area : Area2D) -> void:
 
 func set_attack_status(active: bool) -> void:
 	if attack_active != active:
-				attack_status_changed.emit(active)
-				attack_active = active
+		attack_status_changed.emit(active)
+		attack_active = active
