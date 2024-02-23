@@ -15,8 +15,6 @@ func cleanup() -> void:
 func _draw() -> void:
 	if controller.debug and !collider.disabled:
 		var hitbox_position = collider.position
-		if controller.sprite.flip_h:
-			hitbox_position.x = hitbox_position.x * -1
 		draw_rect(Rect2(hitbox_position - collider.shape.extents + controller.character.global_position - global_position,
 			collider.shape.extents * 2), collider.debug_color)
 
