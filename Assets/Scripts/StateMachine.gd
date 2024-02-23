@@ -5,6 +5,7 @@ signal debug_status_change(next_state: Constants.ATTACK_STATUS)
 
 var current_state: State
 var states: Dictionary
+var attack_states: Dictionary
 @export var animator: AnimationPlayer
 @export var character: CharacterBody2D
 @export var sprite: AnimatedSprite2D

@@ -24,6 +24,6 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 
 func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
-	if is_attack_input():
+	if check_air_attack_input():
 		return Constants.STATE_NAME.AIRATTACK
 	return get_state()

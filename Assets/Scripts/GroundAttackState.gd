@@ -12,6 +12,7 @@ func setup(stateHandler: StateMachine) -> void:
 
 func enter() -> void:
 	# Start animating, etc.
+	animator.play(Constants.ATTACK_STATE_NAME.keys()[get_state()])
 	pass
 	
 func exit() -> void:
@@ -24,7 +25,7 @@ func physics_process(_delta: float) -> void:
 
 func process_attack(_delta: float) -> Constants.ATTACK_STATE_NAME:
 	# Handle input
-	if !animator.is_playing():
+	if !animator.is_playing() or animator.current_animation != Constants.ATTACK_STATE_NAME.keys()[get_state()]:
 		return Constants.ATTACK_STATE_NAME.NONE
 	else:
 		return get_state()

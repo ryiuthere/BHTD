@@ -37,8 +37,82 @@ func is_run_input(delta: float) -> bool:
 	var distx = curr_axis.x - prev_axis.x
 	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) >= abs(prev_axis.x)
 
-func is_attack_input() -> bool:
-	var light = InputBuffer.is_action_press_buffered(Constants.LIGHT, false)
-	var mid = InputBuffer.is_action_press_buffered(Constants.MID, false)
-	var heavy = InputBuffer.is_action_press_buffered(Constants.HEAVY, false)
-	return light or mid or heavy
+func check_ground_attack_input() -> bool:
+	return stateMachine.attack_states.has(get_ground_attack_from_input(true))
+
+func check_air_attack_input() -> bool:
+	return stateMachine.attack_states.has(get_air_attack_from_input(true))
+
+func get_ground_attack_from_input(check_only := false) -> Constants.ATTACK_STATE_NAME:
+	if InputBuffer.is_action_press_buffered(Constants.JUMP, !check_only):
+		return Constants.ATTACK_STATE_NAME.JUMP
+	elif InputBuffer.is_action_press_buffered(Constants.SURGE, !check_only):
+		return Constants.ATTACK_STATE_NAME.SURGE
+	elif InputBuffer.is_action_press_buffered(Constants.BURST, !check_only):
+		return Constants.ATTACK_STATE_NAME.BURST
+	elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only) and InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+		return Constants.ATTACK_STATE_NAME.SP
+	elif is_up_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.L8 
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.M8
+		elif InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+			return Constants.ATTACK_STATE_NAME.H8
+	elif is_side_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.L6 
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.M6
+		elif InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+			return Constants.ATTACK_STATE_NAME.H6
+	elif is_down_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.L2
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.M2
+		elif InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+			return Constants.ATTACK_STATE_NAME.H2
+	else:
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.L5 
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.M5
+		elif InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+			return Constants.ATTACK_STATE_NAME.H5
+	return Constants.ATTACK_STATE_NAME.NONE
+
+func get_air_attack_from_input(check_only := false) -> Constants.ATTACK_STATE_NAME:
+	if InputBuffer.is_action_press_buffered(Constants.JUMP, !check_only):
+		return Constants.ATTACK_STATE_NAME.JUMP
+	elif InputBuffer.is_action_press_buffered(Constants.SURGE, !check_only):
+		return Constants.ATTACK_STATE_NAME.SURGE
+	elif InputBuffer.is_action_press_buffered(Constants.BURST, !check_only):
+		return Constants.ATTACK_STATE_NAME.BURST
+	elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only) and InputBuffer.is_action_press_buffered(Constants.HEAVY, !check_only):
+		return Constants.ATTACK_STATE_NAME.ASP
+	elif is_up_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.AL8 
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.AM8
+	elif is_side_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			var sprite_flipped = -1 if sprite.flip_h else 1
+			if sprite_flipped * curr_axis.x > 0:
+				return Constants.ATTACK_STATE_NAME.AL6
+			else:
+				return Constants.ATTACK_STATE_NAME.AL4
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.AM6
+	elif is_down_angle():
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.AL2
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.AM2
+	else:
+		if InputBuffer.is_action_press_buffered(Constants.LIGHT, !check_only):
+			return Constants.ATTACK_STATE_NAME.AL5 
+		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
+			return Constants.ATTACK_STATE_NAME.AM5
+	return Constants.ATTACK_STATE_NAME.NONE

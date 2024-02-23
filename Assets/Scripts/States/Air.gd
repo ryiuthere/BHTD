@@ -28,7 +28,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if (InputBuffer.is_action_press_buffered(Constants.JUMP) and stateMachine.can_double_jump):
 		return Constants.STATE_NAME.DOUBLEJUMP
-	elif is_attack_input():
+	elif check_air_attack_input():
 		return Constants.STATE_NAME.AIRATTACK
 	if (!fast_fall and InputBuffer.is_action_press_buffered(Constants.DOWN)):
 		fast_fall = true
