@@ -1,11 +1,6 @@
 class_name Jump
 extends State
 
-@export var INITIAL_JUMP_FORCE := 400
-@export var CONSTANT_JUMP_FORCE := 800
-@export var AIR_MOVE_FORCE := 1000
-@export var MAX_AIR_SPEED := 300
-
 var jump_hold: bool
 
 func get_state() -> Constants.STATE_NAME:
@@ -13,7 +8,7 @@ func get_state() -> Constants.STATE_NAME:
 
 func enter() -> void:
 	stateMachine.can_double_jump = true
-	character.velocity.y = -INITIAL_JUMP_FORCE
+	character.velocity.y = -stateMachine.INITIAL_JUMP_FORCE
 	stateMachine.animator.play(Constants.JUMP)
 	jump_hold = true
 
@@ -23,9 +18,9 @@ func exit() -> void:
 func physics_process(delta: float) -> Constants.STATE_NAME:
 	if (character.velocity.y >= 0):
 		return Constants.STATE_NAME.AIR
-	apply_horizontal_movement(delta, AIR_MOVE_FORCE, MAX_AIR_SPEED)
+	apply_horizontal_movement(delta, stateMachine.AIR_MOVE_FORCE, stateMachine.MAX_AIR_SPEED)
 	if (jump_hold):
-		character.velocity.y += -CONSTANT_JUMP_FORCE * delta
+		character.velocity.y += -stateMachine.CONSTANT_JUMP_FORCE * delta
 	return air_physics(delta)
 
 func process(delta: float) -> Constants.STATE_NAME:

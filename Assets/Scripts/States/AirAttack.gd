@@ -1,23 +1,23 @@
-class_name Attack
+class_name AirAttack
 extends State
 
 var attacks : Dictionary
-var current_attack : GroundAttackState
+var current_attack : AirAttackState
 
 func _ready() -> void:
 	super()
 	for child in get_children():
-		if child is GroundAttackState:
+		if child is AirAttackState:
 			child.setup(stateMachine)
 			attacks[child.get_state()] = child
-			stateMachine.ground_attack_states[child.get_state()] = child
+			stateMachine.air_attack_states[child.get_state()] = child
 	current_attack = null
 
 func get_state() -> Constants.STATE_NAME:
-	return Constants.STATE_NAME.ATTACK
+	return Constants.STATE_NAME.AIRATTACK
 
 func enter() -> void:
-	var attack := get_ground_attack_from_input()
+	var attack := get_air_attack_from_input()
 	try_start_attack(attack)
 
 func exit() -> void:
@@ -39,19 +39,17 @@ func process(delta: float) -> Constants.STATE_NAME:
 		if next_action == current_attack.get_state():
 			return get_state()
 		elif next_action == Constants.ATTACK_STATE_NAME.JUMP:
-			return Constants.STATE_NAME.JUMP
+			return Constants.STATE_NAME.DOUBLEJUMP
 		elif next_action == Constants.ATTACK_STATE_NAME.NONE:
 			pass
 		else:
 			if try_start_attack(next_action):
 				return get_state()
-	var attack_input := get_ground_attack_from_input()
+	var attack_input := get_air_attack_from_input()
 	if attack_input != Constants.ATTACK_STATE_NAME.NONE and try_start_attack(attack_input):
 		return get_state()
-	if is_down_angle():
-		return Constants.STATE_NAME.CROUCH
 	else:
-		return Constants.STATE_NAME.IDLE
+		return Constants.STATE_NAME.AIR
 
 func try_start_attack(attack : Constants.ATTACK_STATE_NAME) -> bool:
 	if attacks.has(attack):

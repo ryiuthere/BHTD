@@ -2,6 +2,7 @@ class_name Hitbox
 extends Area2D
 
 @export var collider : CollisionShape2D
+@export var knockback : VectorTool
 var controller : HitboxController
 
 func _ready() -> void:

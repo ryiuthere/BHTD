@@ -1,0 +1,5 @@
+class_name AL5
+extends AirAttackState
+
+func get_state() -> Constants.ATTACK_STATE_NAME:
+	return Constants.ATTACK_STATE_NAME.AL5

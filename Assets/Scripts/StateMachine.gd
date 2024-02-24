@@ -5,7 +5,8 @@ signal debug_status_change(next_state: Constants.ATTACK_STATUS)
 
 var current_state: State
 var states: Dictionary
-var attack_states: Dictionary
+var ground_attack_states: Dictionary
+var air_attack_states: Dictionary
 @export var animator: AnimationPlayer
 @export var character: CharacterBody2D
 @export var sprite: AnimatedSprite2D
@@ -13,6 +14,17 @@ var attack_states: Dictionary
 
 @export var attack_status := Constants.ATTACK_STATUS.NONE
 @onready var last_attack_status := Constants.ATTACK_STATUS.NONE
+
+@export var INITIAL_JUMP_FORCE := 400
+@export var CONSTANT_JUMP_FORCE := 800
+@export var INITIAL_DOUBLEJUMP_FORCE := 600
+@export var AIR_MOVE_FORCE := 1000
+@export var MAX_AIR_SPEED := 300
+@export var MAX_FALL_SPEED := 350
+@export var WALK_FORCE := 3000
+@export var MAX_WALK_SPEED := 100
+@export var RUN_FORCE := 3000
+@export var MAX_RUN_SPEED := 300
 
 var can_double_jump := false
 

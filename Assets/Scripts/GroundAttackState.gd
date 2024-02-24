@@ -1,31 +1,17 @@
 class_name GroundAttackState
-extends BaseState
+extends BaseAttackState
 
 func get_state() -> Constants.ATTACK_STATE_NAME:
 	return Constants.ATTACK_STATE_NAME.L5
 
-func setup(stateHandler: StateMachine) -> void:
-	stateMachine = stateHandler as StateMachine
-	character = stateMachine.character
-	animator = stateMachine.animator
-	sprite = stateMachine.sprite
-
-func enter() -> void:
-	# Start animating, etc.
-	animator.play(Constants.ATTACK_STATE_NAME.keys()[get_state()])
-	pass
-	
-func exit() -> void:
-	# Clean up
-	pass
-
-func physics_process(_delta: float) -> void:
+func physics_process(delta: float) -> Constants.STATE_NAME:
 	# Handle physics
-	pass
+	return ground_physics(delta)
 
-func process_attack(_delta: float) -> Constants.ATTACK_STATE_NAME:
-	# Handle input
-	if !animator.is_playing() or animator.current_animation != Constants.ATTACK_STATE_NAME.keys()[get_state()]:
-		return Constants.ATTACK_STATE_NAME.NONE
-	else:
-		return get_state()
+func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
+	if apply_friction:
+		character.velocity.x *= (1 - Constants.FRICTION * delta)
+	character.move_and_slide()
+	if !character.is_on_floor():
+		return Constants.STATE_NAME.AIR
+	return Constants.STATE_NAME.ATTACK

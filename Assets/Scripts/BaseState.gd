@@ -38,10 +38,10 @@ func is_run_input(delta: float) -> bool:
 	return abs(distx) > Constants.WALK_RUN_SENSITIVITY * delta and abs(curr_axis.x) >= abs(prev_axis.x)
 
 func check_ground_attack_input() -> bool:
-	return stateMachine.attack_states.has(get_ground_attack_from_input(true))
+	return stateMachine.ground_attack_states.has(get_ground_attack_from_input(true))
 
 func check_air_attack_input() -> bool:
-	return stateMachine.attack_states.has(get_air_attack_from_input(true))
+	return stateMachine.air_attack_states.has(get_air_attack_from_input(true))
 
 func get_ground_attack_from_input(check_only := false) -> Constants.ATTACK_STATE_NAME:
 	if InputBuffer.is_action_press_buffered(Constants.JUMP, !check_only):

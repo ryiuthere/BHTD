@@ -1,11 +1,6 @@
 class_name Air
 extends State
 
-@export var JUMP_FORCE := 800
-@export var AIR_MOVE_FORCE := 1000
-@export var MAX_AIR_SPEED := 300
-@export var MAX_FALL_SPEED := 350
-
 var fast_fall: bool
 
 func get_state() -> Constants.STATE_NAME:
@@ -19,9 +14,9 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	apply_horizontal_movement(delta, AIR_MOVE_FORCE, MAX_AIR_SPEED)
+	apply_horizontal_movement(delta, stateMachine.AIR_MOVE_FORCE, stateMachine.MAX_AIR_SPEED)
 	if fast_fall:
-		character.velocity.y = MAX_FALL_SPEED + 150
+		character.velocity.y = stateMachine.MAX_FALL_SPEED + 150
 	return air_physics(delta)
 
 func process(delta: float) -> Constants.STATE_NAME:
