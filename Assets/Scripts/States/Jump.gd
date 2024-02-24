@@ -34,6 +34,6 @@ func process(delta: float) -> Constants.STATE_NAME:
 		return Constants.STATE_NAME.DOUBLEJUMP
 	elif check_air_attack_input():
 		return Constants.STATE_NAME.AIRATTACK
-	if (jump_hold and !Input.is_action_pressed(Constants.JUMP)):
+	if (jump_hold and !InputBuffer.is_action_press_buffered(Constants.JUMP) and !Input.is_action_pressed(Constants.JUMP)):
 		jump_hold = false
 	return Constants.STATE_NAME.JUMP
