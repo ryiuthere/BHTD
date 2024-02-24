@@ -1,8 +1,7 @@
 class_name Run
 extends State
 
-@export var RUN_FORCE := 3000
-@export var MAX_RUN_SPEED := 300
+
 
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.RUN
@@ -16,7 +15,7 @@ func exit() -> void:
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
 	check_sprite_direction()
-	apply_horizontal_movement(delta, RUN_FORCE, MAX_RUN_SPEED)
+	apply_horizontal_movement(delta, stateMachine.RUN_FORCE, stateMachine.MAX_RUN_SPEED)
 	return ground_physics(delta, false)
 
 func process(delta: float) -> Constants.STATE_NAME:
