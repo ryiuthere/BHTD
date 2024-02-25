@@ -116,3 +116,12 @@ func get_air_attack_from_input(check_only := false) -> Constants.ATTACK_STATE_NA
 		elif InputBuffer.is_action_press_buffered(Constants.MID, !check_only):
 			return Constants.ATTACK_STATE_NAME.AM5
 	return Constants.ATTACK_STATE_NAME.NONE
+
+func check_incoming_hitboxes() -> bool:
+	var incoming_hitboxes := stateMachine.hitbox_controller.get_incoming_hitboxes()
+	var hit := false
+	if incoming_hitboxes.size() > 0:
+		for hitbox in incoming_hitboxes:
+			if hitbox is Hitbox:
+				hit = hit or stateMachine.apply_hitbox(hitbox)
+	return hit

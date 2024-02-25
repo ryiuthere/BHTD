@@ -28,21 +28,27 @@ func process(_delta: float) -> Constants.STATE_NAME:
 	return get_state()
 
 func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
-	if apply_friction:
-		character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
-	character.velocity.y += Constants.GRAVITY * delta
-	character.move_and_slide()
-	if (character.is_on_floor()):
-		if curr_axis.x != 0:
-			return Constants.STATE_NAME.RUN
-		else:
-			return Constants.STATE_NAME.IDLE
+	if check_incoming_hitboxes():
+		return Constants.STATE_NAME.HITSTUN
+	if stateMachine.hitstop_frames <= 0:
+		if apply_friction:
+			character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
+		character.velocity.y += Constants.GRAVITY * delta
+		character.move_and_slide()
+		if (character.is_on_floor()):
+			if curr_axis.x != 0:
+				return Constants.STATE_NAME.RUN
+			else:
+				return Constants.STATE_NAME.IDLE
 	return get_state()
 
 func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
-	if apply_friction:
-		character.velocity.x *= (1 - Constants.FRICTION * delta)
-	character.move_and_slide()
-	if !character.is_on_floor():
-		return Constants.STATE_NAME.AIR
+	if check_incoming_hitboxes():
+		return Constants.STATE_NAME.HITSTUN
+	if stateMachine.hitstop_frames <= 0:
+		if apply_friction:
+			character.velocity.x *= (1 - Constants.FRICTION * delta)
+		character.move_and_slide()
+		if !character.is_on_floor():
+			return Constants.STATE_NAME.AIR
 	return get_state()

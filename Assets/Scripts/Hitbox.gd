@@ -3,7 +3,14 @@ extends Area2D
 
 @export var collider : CollisionShape2D
 @export var knockback : VectorTool
+@export var damage : int
+@export var hitstun : int
+@export var hitstop : int
+@export var group_priority := 1
+
 var controller : HitboxController
+var group_id : int
+var flipped : bool
 
 func _ready() -> void:
 	cleanup()

@@ -2279,23 +2279,29 @@ debug_color = Color(0, 0.647059, 0.262745, 0.419608)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_q2usl")
-animation = &"AL5"
+animation = &"L5"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_vqyvv")
 }
 
-[node name="HitboxController" type="Node2D" parent="." node_paths=PackedStringArray("character", "sprite")]
+[node name="HitboxController" type="Node2D" parent="." node_paths=PackedStringArray("character", "sprite", "state_machine")]
 script = ExtResource("11_7iw1f")
 character = NodePath("..")
 sprite = NodePath("../AnimatedSprite2D")
+state_machine = NodePath("../StateMachine")
 
-[node name="Hitbox1" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+[node name="Hitbox1" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider", "knockback")]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("12_e8bup")
 collider = NodePath("HitboxCollider")
+knockback = NodePath("HitboxCollider/Knockback")
+damage = 10
+hitstun = 30
+hitstop = 5
+group_priority = 2
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox1"]
 visible = false
@@ -2305,14 +2311,15 @@ debug_color = Color(0.988235, 0, 0.301961, 0.588235)
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox1/HitboxCollider"]
 script = ExtResource("13_dufu0")
-vector = Vector2(10, -10)
+vector = Vector2(10, -100)
 color = Color(1, 0, 0, 1)
 
-[node name="Hitbox2" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+[node name="Hitbox2" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider", "knockback")]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("12_e8bup")
 collider = NodePath("HitboxCollider")
+knockback = NodePath("HitboxCollider/Knockback")
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox2"]
 visible = false
@@ -2325,11 +2332,12 @@ script = ExtResource("13_dufu0")
 vector = Vector2(10, -10)
 color = Color(1, 0, 0, 1)
 
-[node name="Hitbox3" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+[node name="Hitbox3" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider", "knockback")]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("12_e8bup")
 collider = NodePath("HitboxCollider")
+knockback = NodePath("HitboxCollider/Knockback")
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox3"]
 visible = false
@@ -2343,6 +2351,7 @@ vector = Vector2(10, -10)
 color = Color(1, 0, 0, 1)
 
 [node name="Hurtbox1" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("13_if02b")
@@ -2355,6 +2364,7 @@ shape = SubResource("RectangleShape2D_5rht4")
 debug_color = Color(0.172549, 0.517647, 1, 0.419608)
 
 [node name="Hurtbox2" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("13_if02b")
@@ -2367,6 +2377,7 @@ shape = SubResource("RectangleShape2D_xjiak")
 debug_color = Color(0.172549, 0.517647, 1, 0.419608)
 
 [node name="Hurtbox3" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("13_if02b")
@@ -2425,15 +2436,9 @@ script = ExtResource("28_76v7s")
 script = ExtResource("29_1iwij")
 
 [connection signal="attack_status_changed" from="HitboxController" to="StateMachine" method="on_attack_status_change"]
-[connection signal="area_entered" from="HitboxController/Hitbox1" to="HitboxController" method="_on_hitbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hitbox1/HitboxCollider" to="HitboxController/Hitbox1" method="_on_collision_shape_2d_visibility_changed"]
-[connection signal="area_entered" from="HitboxController/Hitbox2" to="HitboxController" method="_on_hitbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hitbox2/HitboxCollider" to="HitboxController/Hitbox2" method="_on_collision_shape_2d_visibility_changed"]
-[connection signal="area_entered" from="HitboxController/Hitbox3" to="HitboxController" method="_on_hitbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hitbox3/HitboxCollider" to="HitboxController/Hitbox3" method="_on_collision_shape_2d_visibility_changed"]
-[connection signal="area_entered" from="HitboxController/Hurtbox1" to="HitboxController" method="_on_hurtbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hurtbox1/CollisionShape2D" to="HitboxController/Hurtbox1" method="_on_collision_shape_2d_visibility_changed"]
-[connection signal="area_entered" from="HitboxController/Hurtbox2" to="HitboxController" method="_on_hurtbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hurtbox2/CollisionShape2D" to="HitboxController/Hurtbox2" method="_on_collision_shape_2d_visibility_changed"]
-[connection signal="area_entered" from="HitboxController/Hurtbox3" to="HitboxController" method="_on_hurtbox_area_entered"]
 [connection signal="visibility_changed" from="HitboxController/Hurtbox3/CollisionShape2D" to="HitboxController/Hurtbox3" method="_on_collision_shape_2d_visibility_changed"]
