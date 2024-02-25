@@ -49,12 +49,12 @@ func _process(delta) -> void:
 		if hitbox_ids[hitbox_id] <= 0:
 			hitbox_ids.erase(hitbox_id)
 	if hitstop_frames > 0:
-		animator.pause()
 		hitstop_frames -= 1
 	else:
 		if hitstop_frames == 0:
 			animator.play()
 			hitstop_frames -= 1
+			debug_status_change.emit(attack_status)
 		if hitstun_frames > 0:
 			hitstun_frames -= 1
 		var next_state = current_state.process(delta)
@@ -100,3 +100,6 @@ func hurtbox_push(amount_x: float) -> void:
 
 func apply_hitstop(frames: int) -> void:
 	hitstop_frames = frames
+	if (hitstop_frames > 0):
+		animator.pause()
+		debug_status_change.emit(Constants.ATTACK_STATUS.HITSTOP)

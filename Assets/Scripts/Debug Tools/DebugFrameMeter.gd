@@ -98,6 +98,6 @@ func _update_framemeter_state(attack_state : Constants.ATTACK_STATUS) -> void:
 		Constants.ATTACK_STATUS.STARTUP: current_state = STATES.STARTUP
 		Constants.ATTACK_STATUS.ACTIVE: current_state = STATES.ACTIVE
 		Constants.ATTACK_STATUS.RECOVERY: current_state = STATES.RECOVERY
-		# Constants.ATTACK_STATUS.HITSTOP: current_state = STATES.HITSTOP
+		Constants.ATTACK_STATUS.HITSTOP: current_state = STATES.HITSTOP
 	if not active and current_state != STATES.CLEAR:
 		active = true

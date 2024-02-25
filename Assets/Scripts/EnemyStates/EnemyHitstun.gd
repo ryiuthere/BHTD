@@ -12,6 +12,8 @@ func exit() -> void:
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
 	check_incoming_hitboxes(delta)
+	if (stateMachine.hitstop_frames) > 0:
+		return Constants.STATE_NAME.HITSTUN
 	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
 	character.velocity.y += Constants.GRAVITY * delta
 	character.move_and_slide()

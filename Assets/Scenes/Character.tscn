@@ -2321,6 +2321,8 @@ collision_mask = 0
 script = ExtResource("12_e8bup")
 collider = NodePath("HitboxCollider")
 knockback = NodePath("HitboxCollider/Knockback")
+hitstun = 2
+hitstop = 2
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox2"]
 visible = false
@@ -2339,6 +2341,8 @@ collision_mask = 0
 script = ExtResource("12_e8bup")
 collider = NodePath("HitboxCollider")
 knockback = NodePath("HitboxCollider/Knockback")
+hitstun = 5
+hitstop = 1
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox3"]
 visible = false
