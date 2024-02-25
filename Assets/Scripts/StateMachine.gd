@@ -88,7 +88,7 @@ func apply_hitbox(hitbox: Hitbox) -> bool:
 			var knockback_vector = hitbox.knockback.vector
 			if hitbox.flipped:
 				knockback_vector.x *= -1
-			character.velocity += knockback_vector
+			character.velocity += knockback_vector * Constants.HITBOX_KNOCKBACK_MULTIPLIER
 		hitstun_frames = hitbox.hitstun
 		hitstop_frames = hitbox.hitstop
 		hitbox.controller.state_machine.apply_hitstop(hitbox.hitstop)

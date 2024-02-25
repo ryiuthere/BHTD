@@ -12,8 +12,8 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Hurtbox.gd" id="15_0wdo4"]
 [ext_resource type="Script" path="res://Assets/Scripts/StateMachine.gd" id="16_ja067"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmutg"]
-size = Vector2(17, 23)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t8mx1"]
+height = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vrwrw"]
 atlas = ExtResource("1_vx8v8")
@@ -781,7 +781,7 @@ size = Vector2(22.5, 10.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.5, -11.5)
-shape = SubResource("RectangleShape2D_vmutg")
+shape = SubResource("CapsuleShape2D_t8mx1")
 debug_color = Color(0, 0.647059, 0.262745, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -855,8 +855,8 @@ vector = Vector2(10, -10)
 color = Color(1, 0, 0, 1)
 
 [node name="Hurtbox1" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 4
+collision_mask = 6
 script = ExtResource("15_0wdo4")
 collider = NodePath("CollisionShape2D")
 
@@ -867,8 +867,8 @@ debug_color = Color(0.172549, 0.517647, 1, 0.419608)
 
 [node name="Hurtbox2" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
 visible = false
-collision_layer = 0
-collision_mask = 2
+collision_layer = 4
+collision_mask = 6
 script = ExtResource("15_0wdo4")
 collider = NodePath("CollisionShape2D")
 
@@ -879,8 +879,8 @@ debug_color = Color(0.172549, 0.517647, 1, 0.419608)
 
 [node name="Hurtbox3" type="Area2D" parent="HitboxController" node_paths=PackedStringArray("collider")]
 visible = false
-collision_layer = 0
-collision_mask = 2
+collision_layer = 4
+collision_mask = 6
 script = ExtResource("15_0wdo4")
 collider = NodePath("CollisionShape2D")
 

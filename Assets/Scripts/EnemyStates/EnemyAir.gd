@@ -1,5 +1,5 @@
 class_name EnemyAir
-extends State
+extends EnemyState
 
 func get_state() -> Constants.STATE_NAME:
 	return Constants.STATE_NAME.AIR

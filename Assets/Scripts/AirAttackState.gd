@@ -3,7 +3,10 @@ extends BaseAttackState
 
 var fast_fall: bool
 
-func get_state() -> Constants.ATTACK_STATE_NAME:
+func get_state() -> Constants.STATE_NAME:
+	return Constants.STATE_NAME.AIRATTACK
+
+func get_attack_state() -> Constants.ATTACK_STATE_NAME:
 	return Constants.ATTACK_STATE_NAME.AL5
 
 func enter() -> void:
@@ -18,19 +21,11 @@ func physics_process(delta: float) -> Constants.STATE_NAME:
 	return air_physics(delta)
 
 func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
-	if check_incoming_hitboxes():
-		return Constants.STATE_NAME.HITSTUN
+	var next_state := super(delta, apply_friction)
+	if next_state != get_state():
+		return next_state
 	if stateMachine.hitstop_frames <= 0:
-		if apply_friction:
-			character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
-		character.velocity.y += Constants.GRAVITY * delta
-		character.move_and_slide()
-		if (character.is_on_floor()):
-			if curr_axis.x != 0:
-				return Constants.STATE_NAME.RUN
-			else:
-				return Constants.STATE_NAME.IDLE
 		if (!fast_fall and character.velocity.y >= 0
 			and InputBuffer.is_action_press_buffered(Constants.DOWN)):
 			fast_fall = true
-	return Constants.STATE_NAME.AIRATTACK
+	return get_state()

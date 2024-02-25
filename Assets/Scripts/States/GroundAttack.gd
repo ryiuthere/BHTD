@@ -9,8 +9,8 @@ func _ready() -> void:
 	for child in get_children():
 		if child is GroundAttackState:
 			child.setup(stateMachine)
-			attacks[child.get_state()] = child
-			stateMachine.ground_attack_states[child.get_state()] = child
+			attacks[child.get_attack_state()] = child
+			stateMachine.ground_attack_states[child.get_attack_state()] = child
 	current_attack = null
 
 func get_state() -> Constants.STATE_NAME:
