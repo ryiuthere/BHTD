@@ -153,8 +153,6 @@ func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
 	return get_state()
 
 func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
-	if get_state() == Constants.STATE_NAME.ATTACK:
-		print("test")
 	if check_incoming_hitboxes(delta):
 		return Constants.STATE_NAME.HITSTUN
 	if stateMachine.hitstop_frames <= 0:
