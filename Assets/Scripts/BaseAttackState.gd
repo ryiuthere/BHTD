@@ -1,7 +1,7 @@
 class_name BaseAttackState
 extends BaseState
 
-func get_state() -> Constants.ATTACK_STATE_NAME:
+func get_attack_state() -> Constants.ATTACK_STATE_NAME:
 	return Constants.ATTACK_STATE_NAME.NONE
 
 func setup(stateHandler: StateMachine) -> void:
@@ -12,17 +12,13 @@ func setup(stateHandler: StateMachine) -> void:
 
 func enter() -> void:
 	# Start animating, etc.
-	animator.play(Constants.ATTACK_STATE_NAME.keys()[get_state()])
-	pass
-	
-func exit() -> void:
-	# Clean up
+	animator.play(Constants.ATTACK_STATE_NAME.keys()[get_attack_state()])
 	pass
 
 func process_attack(_delta: float) -> Constants.ATTACK_STATE_NAME:
 	# Handle input
 	get_axis()
-	if !animator.is_playing() or animator.current_animation != Constants.ATTACK_STATE_NAME.keys()[get_state()]:
+	if !animator.is_playing() or animator.current_animation != Constants.ATTACK_STATE_NAME.keys()[get_attack_state()]:
 		return Constants.ATTACK_STATE_NAME.NONE
 	else:
-		return get_state()
+		return get_attack_state()

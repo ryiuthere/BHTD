@@ -9,8 +9,8 @@ func _ready() -> void:
 	for child in get_children():
 		if child is AirAttackState:
 			child.setup(stateMachine)
-			attacks[child.get_state()] = child
-			stateMachine.air_attack_states[child.get_state()] = child
+			attacks[child.get_attack_state()] = child
+			stateMachine.air_attack_states[child.get_attack_state()] = child
 	current_attack = null
 
 func get_state() -> Constants.STATE_NAME:
@@ -36,7 +36,7 @@ func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if current_attack != null:
 		var next_action := current_attack.process_attack(delta)
-		if next_action == current_attack.get_state():
+		if next_action == current_attack.get_attack_state():
 			return get_state()
 		elif next_action == Constants.ATTACK_STATE_NAME.JUMP:
 			return Constants.STATE_NAME.DOUBLEJUMP
