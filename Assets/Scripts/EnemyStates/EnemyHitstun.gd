@@ -11,7 +11,7 @@ func exit() -> void:
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
-	check_incoming_hitboxes()
+	check_incoming_hitboxes(delta)
 	character.velocity.x *= (1 - Constants.FRICTION * delta * 0.1)
 	character.velocity.y += Constants.GRAVITY * delta
 	character.move_and_slide()

@@ -95,5 +95,8 @@ func apply_hitbox(hitbox: Hitbox) -> bool:
 		return hitstun_frames > 0
 	return false
 
+func hurtbox_push(amount_x: float) -> void:
+	character.velocity.x += amount_x
+
 func apply_hitstop(frames: int) -> void:
 	hitstop_frames = frames

@@ -128,8 +128,8 @@ func get_air_attack_from_input(check_only := false) -> Constants.ATTACK_STATE_NA
 			return Constants.ATTACK_STATE_NAME.AM5
 	return Constants.ATTACK_STATE_NAME.NONE
 
-func check_incoming_hitboxes() -> bool:
-	var incoming_hitboxes := stateMachine.hitbox_controller.get_incoming_hitboxes()
+func check_incoming_hitboxes(delta: float) -> bool:
+	var incoming_hitboxes := stateMachine.hitbox_controller.get_incoming_hitboxes(delta)
 	var hit := false
 	if incoming_hitboxes.size() > 0:
 		for hitbox in incoming_hitboxes:
@@ -138,7 +138,7 @@ func check_incoming_hitboxes() -> bool:
 	return hit
 
 func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
-	if check_incoming_hitboxes():
+	if check_incoming_hitboxes(delta):
 		return Constants.STATE_NAME.HITSTUN
 	if stateMachine.hitstop_frames <= 0:
 		if apply_friction:
@@ -155,7 +155,7 @@ func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
 func ground_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
 	if get_state() == Constants.STATE_NAME.ATTACK:
 		print("test")
-	if check_incoming_hitboxes():
+	if check_incoming_hitboxes(delta):
 		return Constants.STATE_NAME.HITSTUN
 	if stateMachine.hitstop_frames <= 0:
 		if apply_friction:

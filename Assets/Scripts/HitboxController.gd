@@ -42,8 +42,9 @@ func cleanup() -> void:
 			hitbox.cleanup()
 	set_attack_status(false)
 
-func get_incoming_hitboxes() -> Array:
+func get_incoming_hitboxes(delta: float) -> Array:
 	var incoming_hitboxes : Dictionary = {}
+	var overlapping_hurtboxes : Dictionary = {}
 	for hurtbox in hurtboxes:
 		if hurtbox is Hurtbox:
 			for area in hurtbox.get_overlapping_areas():
@@ -52,9 +53,17 @@ func get_incoming_hitboxes() -> Array:
 						incoming_hitboxes[area.group_id] = area
 					else:
 						incoming_hitboxes[area.group_id] = area
+				if area is Hurtbox and area.controller.id != hurtbox.controller.id:
+					overlapping_hurtboxes[hurtbox.controller.id] = area.controller.state_machine
 	var result : Array = []
 	for hitbox in incoming_hitboxes:
 		result.append(incoming_hitboxes[hitbox])
+	for group_id in overlapping_hurtboxes:
+		var target := overlapping_hurtboxes[group_id] as StateMachine
+		var direction := 1 if state_machine.character.position.x - target.character.position.x > 0 else -1
+		var dist := pow(state_machine.character.position.x - target.character.position.x, 2)
+		var force = delta * Constants.HURTBOX_PUSH_FORCE / (dist + 1) * direction
+		state_machine.hurtbox_push(force)
 	return result
 
 func set_attack_status(active: bool) -> void:
