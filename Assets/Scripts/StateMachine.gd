@@ -29,6 +29,7 @@ var air_attack_states: Dictionary
 var can_double_jump := false
 var hitstop_frames := -1
 var hitstun_frames := 0
+var cancel_frames := 0
 var hitbox_ids : Dictionary
 
 func _ready() -> void:
@@ -44,17 +45,8 @@ func _physics_process(delta) -> void:
 	enter_state(next_state)
 
 func _process(delta) -> void:
-	for hitbox_id in hitbox_ids:
-		hitbox_ids[hitbox_id] -= 1
-		if hitbox_ids[hitbox_id] <= 0:
-			hitbox_ids.erase(hitbox_id)
-	if hitstop_frames > 0:
-		hitstop_frames -= 1
-	else:
-		if hitstop_frames == 0:
-			animator.play()
-			hitstop_frames -= 1
-			debug_status_change.emit(attack_status)
+	frame_update()
+	if hitstop_frames < 0:
 		if hitstun_frames > 0:
 			hitstun_frames -= 1
 		var next_state = current_state.process(delta)
@@ -89,17 +81,32 @@ func apply_hitbox(hitbox: Hitbox) -> bool:
 			if hitbox.flipped:
 				knockback_vector.x *= -1
 			character.velocity += knockback_vector * Constants.HITBOX_KNOCKBACK_MULTIPLIER
-		hitstun_frames = hitbox.hitstun
-		hitstop_frames = hitbox.hitstop
-		hitbox.controller.state_machine.apply_hitstop(hitbox.hitstop)
+		hitstun_frames = max(hitbox.hitstun, hitstun_frames)
+		hitstop_frames = max(hitbox.hitstop, hitstop_frames)
+		hitbox.controller.state_machine.on_hit(hitbox.hitstop)
 		return hitstun_frames > 0
 	return false
 
 func hurtbox_push(amount_x: float) -> void:
 	character.velocity.x += amount_x
 
-func apply_hitstop(frames: int) -> void:
-	hitstop_frames = frames
+func on_hit(hitstop: int) -> void:
+	cancel_frames = Constants.ATTACK_CANCEL_WINDOW
+	hitstop_frames = hitstop
 	if (hitstop_frames > 0):
 		animator.pause()
 		debug_status_change.emit(Constants.ATTACK_STATUS.HITSTOP)
+
+func frame_update() -> void:
+	if cancel_frames > 0:
+		cancel_frames -= 1
+	for hitbox_id in hitbox_ids:
+		hitbox_ids[hitbox_id] -= 1
+		if hitbox_ids[hitbox_id] <= 0:
+			hitbox_ids.erase(hitbox_id)
+	if hitstop_frames > 0:
+		hitstop_frames -= 1
+	if hitstop_frames == 0:
+			animator.play()
+			hitstop_frames -= 1
+			debug_status_change.emit(attack_status)
