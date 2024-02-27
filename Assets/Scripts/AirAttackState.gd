@@ -29,3 +29,11 @@ func air_physics(delta: float, apply_friction := true) -> Constants.STATE_NAME:
 			and InputBuffer.is_action_press_buffered(Constants.DOWN)):
 			fast_fall = true
 	return get_state()
+
+func process_attack(delta: float) -> Constants.ATTACK_STATE_NAME:
+	var next_state = super(delta)
+	if next_state != Constants.ATTACK_STATE_NAME.NONE:
+		var inputted_state := get_air_attack_from_input(true)
+		if cancel_attack_states().has(inputted_state):
+			next_state = inputted_state
+	return next_state

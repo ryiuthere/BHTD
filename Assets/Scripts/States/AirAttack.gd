@@ -3,6 +3,12 @@ extends State
 
 var attacks : Dictionary
 var current_attack : AirAttackState
+var can_cancel_attack : bool:
+	get:
+		return stateMachine.cancel_frames > 0
+var can_double_jump : bool:
+	get:
+		return stateMachine.can_double_jump
 
 func _ready() -> void:
 	super()
@@ -24,27 +30,27 @@ func exit() -> void:
 	# Clean up hitboxes
 	stateMachine.attack_status = Constants.ATTACK_STATUS.NONE
 	stateMachine.hitbox_controller.cleanup()
+	current_attack = null
 	pass
 
 func physics_process(delta: float) -> Constants.STATE_NAME:
 	if current_attack != null:
 		return current_attack.physics_process(delta)
 	else:
-		return Constants.STATE_NAME.IDLE
+		return Constants.STATE_NAME.AIR
 
 func process(delta: float) -> Constants.STATE_NAME:
 	super(delta)
 	if current_attack != null:
 		var next_action := current_attack.process_attack(delta)
-		if next_action == current_attack.get_attack_state():
+		if next_action == Constants.ATTACK_STATE_NAME.CONTINUE:
 			return get_state()
-		elif next_action == Constants.ATTACK_STATE_NAME.JUMP:
+		elif can_double_jump and next_action == Constants.ATTACK_STATE_NAME.JUMP:
 			return Constants.STATE_NAME.DOUBLEJUMP
 		elif next_action == Constants.ATTACK_STATE_NAME.NONE:
 			pass
-		else:
-			if try_start_attack(next_action):
-				return get_state()
+		elif !can_cancel_attack or (can_cancel_attack and try_start_attack(next_action)):
+			return get_state()
 	var attack_input := get_air_attack_from_input()
 	if attack_input != Constants.ATTACK_STATE_NAME.NONE and try_start_attack(attack_input):
 		return get_state()
@@ -55,6 +61,8 @@ func try_start_attack(attack : Constants.ATTACK_STATE_NAME) -> bool:
 	if attacks.has(attack):
 		stateMachine.attack_status = Constants.ATTACK_STATUS.STARTUP
 		check_sprite_direction()
+		if current_attack != null:
+			current_attack.exit()
 		current_attack = attacks[attack]
 		current_attack.enter()
 		return true
