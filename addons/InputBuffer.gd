@@ -55,7 +55,6 @@ func is_action_press_buffered(action: String, invalidate := true) -> bool:
 					# Prevent this method from returning true repeatedly and registering duplicate actions.
 					if invalidate:
 						_invalidate_action(action)
-					
 					return true;
 		elif event is InputEventJoypadButton:
 			var button_index: int = event.button_index
@@ -87,7 +86,7 @@ func is_action_press_buffered(action: String, invalidate := true) -> bool:
 func _invalidate_action(action: String) -> void:
 	for event in InputMap.action_get_events(action):
 		if event is InputEventKey:
-			var scancode: int = event.keycode
+			var scancode: int = event.physical_keycode
 			if keyboard_timestamps.has(scancode):
 				keyboard_timestamps[scancode] = 0
 		elif event is InputEventJoypadButton:
