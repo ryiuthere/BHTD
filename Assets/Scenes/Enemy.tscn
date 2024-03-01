@@ -1,8 +1,9 @@
-[gd_scene load_steps=103 format=3 uid="uid://c8lr0ifdidfs4"]
+[gd_scene load_steps=104 format=3 uid="uid://c8lr0ifdidfs4"]
 
 [ext_resource type="Texture2D" uid="uid://dbt7wevwsilnv" path="res://Assets/Raw/Enemy/Galvan_5_Air Idle.png" id="1_vx8v8"]
 [ext_resource type="Texture2D" uid="uid://m4us7nkkgao4" path="res://Assets/Raw/Enemy/Galvan_0_Idle.png" id="2_tb5mm"]
 [ext_resource type="Texture2D" uid="uid://c8dw1xtmm4hjm" path="res://Assets/Raw/Enemy/Galvan_32_Injured strong.png" id="2_xkyrw"]
+[ext_resource type="Script" path="res://Assets/Scripts/HitboxVisibility.gd" id="6_a6rjw"]
 [ext_resource type="Script" path="res://Assets/Scripts/EnemyStates/EnemyIdle.gd" id="8_vemng"]
 [ext_resource type="Script" path="res://Assets/Scripts/EnemyStates/EnemyAir.gd" id="9_7o4nb"]
 [ext_resource type="Script" path="res://Assets/Scripts/EnemyStates/EnemyHitstun.gd" id="10_bxo5i"]
@@ -813,6 +814,8 @@ visible = false
 position = Vector2(30.25, -3.75)
 shape = SubResource("RectangleShape2D_fotku")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("6_a6rjw")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox1/HitboxCollider"]
 script = ExtResource("14_ogdhm")
@@ -831,6 +834,8 @@ visible = false
 position = Vector2(20, -9)
 shape = SubResource("RectangleShape2D_37ax4")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("6_a6rjw")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox2/HitboxCollider"]
 script = ExtResource("14_ogdhm")
@@ -849,6 +854,8 @@ visible = false
 position = Vector2(21.5, -26)
 shape = SubResource("RectangleShape2D_cyqff")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("6_a6rjw")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox3/HitboxCollider"]
 script = ExtResource("14_ogdhm")
