@@ -1,4 +1,4 @@
-[gd_scene load_steps=271 format=3 uid="uid://clksbqtmf7u4k"]
+[gd_scene load_steps=272 format=3 uid="uid://clksbqtmf7u4k"]
 
 [ext_resource type="Texture2D" uid="uid://dppnqqekas87c" path="res://Assets/Raw/Character/Kaien_5_Air Idle.png" id="1_cmtv7"]
 [ext_resource type="Texture2D" uid="uid://buys5ilijo2jb" path="res://Assets/Raw/Character/Kaien_16_Neutral air.png" id="1_f6sbl"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/States/Jump.gd" id="13_b56vd"]
 [ext_resource type="Script" path="res://addons/VectorTool.gd" id="13_dufu0"]
 [ext_resource type="Script" path="res://Assets/Scripts/Hurtbox.gd" id="13_if02b"]
+[ext_resource type="Script" path="res://Assets/Scripts/HitboxVisibility.gd" id="14_ob5cp"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/DoubleJump.gd" id="15_qemcs"]
 [ext_resource type="Script" path="res://Assets/Scripts/States/GroundAttack.gd" id="18_lijdh"]
 [ext_resource type="Script" path="res://Assets/Scripts/AttackStates/L5.gd" id="19_fn1vt"]
@@ -1655,7 +1656,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:visible")
+tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:enable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1890,7 +1891,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:visible")
+tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:enable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1991,7 +1992,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:visible")
+tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:enable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2056,7 +2057,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:visible")
+tracks/2/path = NodePath("HitboxController/Hitbox1/HitboxCollider:enable")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2280,7 +2281,7 @@ debug_color = Color(0, 0.647059, 0.262745, 0.419608)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_q2usl")
-animation = &"L5"
+animation = &"L6"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -2309,6 +2310,8 @@ visible = false
 position = Vector2(30.25, -3.75)
 shape = SubResource("RectangleShape2D_fotku")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("14_ob5cp")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox1/HitboxCollider"]
 script = ExtResource("13_dufu0")
@@ -2329,6 +2332,8 @@ visible = false
 position = Vector2(20, -9)
 shape = SubResource("RectangleShape2D_37ax4")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("14_ob5cp")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox2/HitboxCollider"]
 script = ExtResource("13_dufu0")
@@ -2349,6 +2354,8 @@ visible = false
 position = Vector2(21.5, -26)
 shape = SubResource("RectangleShape2D_cyqff")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
+script = ExtResource("14_ob5cp")
+enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox3/HitboxCollider"]
 script = ExtResource("13_dufu0")
