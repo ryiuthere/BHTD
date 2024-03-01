@@ -850,7 +850,6 @@ collider = NodePath("HitboxCollider")
 knockback = NodePath("HitboxCollider/Knockback")
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox3"]
-visible = false
 position = Vector2(21.5, -26)
 shape = SubResource("RectangleShape2D_cyqff")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)

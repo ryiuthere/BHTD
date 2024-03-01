@@ -61,7 +61,10 @@ func enter_state(next_state: Constants.STATE_NAME) -> void:
 		current_state.enter()
 
 func check_for_new_attack_status() -> void:
-	if last_attack_status != attack_status:
+	if hitstop_frames > -1:
+		debug_status_change.emit(Constants.ATTACK_STATUS.HITSTOP)
+		last_attack_status = Constants.ATTACK_STATUS.HITSTOP
+	elif last_attack_status != attack_status:
 		debug_status_change.emit(attack_status)
 		last_attack_status = attack_status
 
@@ -95,7 +98,6 @@ func on_hit(hitstop: int) -> void:
 	hitstop_frames = hitstop
 	if (hitstop_frames > 0):
 		animator.pause()
-		debug_status_change.emit(Constants.ATTACK_STATUS.HITSTOP)
 
 func frame_update() -> void:
 	if cancel_frames > 0:
@@ -104,9 +106,7 @@ func frame_update() -> void:
 		hitbox_ids[hitbox_id] -= 1
 		if hitbox_ids[hitbox_id] <= 0:
 			hitbox_ids.erase(hitbox_id)
-	if hitstop_frames > 0:
+	if hitstop_frames >= 0:
 		hitstop_frames -= 1
-	if hitstop_frames == 0:
+	if hitstop_frames == 1:
 			animator.play()
-			hitstop_frames -= 1
-			debug_status_change.emit(attack_status)
