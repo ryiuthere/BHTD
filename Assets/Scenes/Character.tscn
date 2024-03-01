@@ -2309,9 +2309,9 @@ group_priority = 2
 visible = false
 position = Vector2(30.25, -3.75)
 shape = SubResource("RectangleShape2D_fotku")
+disabled = true
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
 script = ExtResource("14_ob5cp")
-enable = true
 
 [node name="Knockback" type="Node2D" parent="HitboxController/Hitbox1/HitboxCollider"]
 script = ExtResource("13_dufu0")
@@ -2350,7 +2350,6 @@ hitstun = 5
 hitstop = 1
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxController/Hitbox3"]
-visible = false
 position = Vector2(21.5, -26)
 shape = SubResource("RectangleShape2D_cyqff")
 debug_color = Color(0.988235, 0, 0.301961, 0.588235)
